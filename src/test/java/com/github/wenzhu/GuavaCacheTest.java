@@ -20,6 +20,24 @@ import com.google.common.cache.RemovalNotification;
 import com.google.common.cache.Weigher;
 
 public class GuavaCacheTest {
+	
+	@Test
+	public void whenCacheMiss_thenValueIsComputed() {
+	    CacheLoader<String, String> loader;
+	    loader = new CacheLoader<String, String>() {
+	        @Override
+	        public String load(String key) {
+	            return key.toUpperCase();
+	        }
+	    };
+	 
+	    LoadingCache<String, String> cache;
+	    cache = CacheBuilder.newBuilder().build(loader);
+	 
+	    assertEquals(0, cache.size());
+	    assertEquals("HELLO", cache.getUnchecked("hello"));
+	    assertEquals(1, cache.size());
+	}
 
     @Test
     public void whenCacheMiss_thenAutoLoad() {
