@@ -1,4 +1,4 @@
-package com.github.wenzhu;
+package com.github.wenzhu.guava;
 
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;

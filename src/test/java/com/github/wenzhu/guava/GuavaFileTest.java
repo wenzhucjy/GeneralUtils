@@ -1,4 +1,4 @@
-package com.github.wenzhu;
+package com.github.wenzhu.guava;
 
 import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertEquals;
@@ -197,8 +197,7 @@ public class GuavaFileTest {
 				FileUtils.getFile("src/main/resources/"), true);
 	}
 
-	// //////////////////////////////////////Java – Convert File to InputStream
-	// ///////////////////
+	// ////////////////  Java – Convert File to InputStream ///////////////////
 
 	@Test
 	public void givenUsingGuava_whenConvertingFileToInputStream_thenCorrect() throws IOException {

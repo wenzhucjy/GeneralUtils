@@ -1,4 +1,4 @@
-package com.github.wenzhu;
+package com.github.wenzhu.guava;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertEquals;
