@@ -4,6 +4,8 @@
 *.war
 *.ear
 
+*.pom.properties
+
 
 # Eclipse
 .settings/
