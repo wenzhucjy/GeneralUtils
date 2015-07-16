@@ -4,6 +4,10 @@
 *.war
 *.ear
 
+# Maven
+target/
+log/
+
 *.pom.properties
 
 
@@ -19,7 +23,3 @@
 
 # Mac
 .DS_Store
-
-# Maven
-log/
-target/
