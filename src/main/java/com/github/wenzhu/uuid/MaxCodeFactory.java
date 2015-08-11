@@ -12,7 +12,7 @@ public class MaxCodeFactory {
 
     }
 
-    public ISnCode generateISnCode() {
+    public static ISnCode generateISnCode() {
         return new SnCodeService();
     }
 

@@ -1,8 +1,8 @@
 package com.github.wenzhu.uuid.arithmatic;
 
 import com.github.wenzhu.uuid.dao.SnCodeFactory;
+import com.google.common.collect.Maps;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -14,8 +14,8 @@ import java.util.Map;
  */
 public class CacheManager {
 
-    private Map<String, Integer> mapDB = new HashMap<String, Integer>();
-    private Map<String, Integer> mapNow = new HashMap<String, Integer>();
+    private Map<String, Integer> mapDB = Maps.newHashMap();
+    private Map<String, Integer> mapNow = Maps.newHashMap();
 
     private static CacheManager cm = new CacheManager();
 
