@@ -1,4 +1,4 @@
-package com.github.wenzhu.uuid;
+package com.github.wenzhu.uuid.dao;
 
 /**
  * description:简单工厂
@@ -9,11 +9,12 @@ package com.github.wenzhu.uuid;
  */
 public class SnCodeFactory {
 
-    private SnCodeFactory(){
+    private SnCodeFactory() {
 
     }
 
-    public static SnCodeDao generateSnCodeDao(){
+    public static SnCodeDao generateSnCodeDao() {
         return new FileImpl();
     }
+
 }

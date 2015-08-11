@@ -1,0 +1,39 @@
+package com.github.wenzhu.uuid.arithmatic;
+
+import com.github.wenzhu.uuid.dao.SnCodeFactory;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * description:用于管理缓存订单序列号与DB序列号的最大值
+ *
+ * @author: jy.chen
+ * @version: 1.0
+ * @since: 2015/8/11 - 17:21
+ */
+public class CacheManager {
+
+    private Map<String, Integer> mapDB = new HashMap<String, Integer>();
+    private Map<String, Integer> mapNow = new HashMap<String, Integer>();
+
+    private static CacheManager cm = new CacheManager();
+
+    private CacheManager() {
+        //init data
+        mapDB = SnCodeFactory.generateSnCodeDao().getAll();
+        mapNow = SnCodeFactory.generateSnCodeDao().getAll();
+    }
+
+    public static CacheManager getInstance() {
+        return cm;
+    }
+
+    public Map<String, Integer> getMapDB() {
+        return mapDB;
+    }
+
+    public Map<String, Integer> getMapNow() {
+        return mapNow;
+    }
+}

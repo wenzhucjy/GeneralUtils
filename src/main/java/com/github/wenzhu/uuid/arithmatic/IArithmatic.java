@@ -14,6 +14,6 @@ public interface IArithmatic {
      * @param cacheNum      缓存数量
      * @return
      */
-    public String genSnCode(String businessType, int cacheNum);
+    public String genMaxCode(String businessType, int cacheNum);
 }
 

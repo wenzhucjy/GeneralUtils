@@ -1,53 +1,85 @@
 package com.github.wenzhu.uuid.arithmatic;
 
 import com.github.wenzhu.uuid.SnCode;
-import com.github.wenzhu.uuid.SnCodeDao;
-import com.github.wenzhu.uuid.SnCodeFactory;
+import com.github.wenzhu.uuid.dao.SnCodeDao;
+import com.github.wenzhu.uuid.dao.SnCodeFactory;
 
 /**
- * description:Ä¬ÈÏµÄÔËËã½Ó¿Ú
+ * description:é»˜è®¤çš„è¿ç®—å®ç°
  *
  * @author: jy.chen
  * @version: 1.0
  * @since: 2015/8/11 - 10:58
  */
 public class DefaultArithmatic implements IArithmatic {
-	private SnCodeDao dao = SnCodeFactory.generateSnCodeDao();
+    private SnCodeDao dao = SnCodeFactory.generateSnCodeDao();
 
-	/**
-	 * Í¨¹ıÒµÎñÀàĞÍ¼ÆËã³ösncode
-	 *
-	 * @param businessType ÒµÎñÀàĞÍ
-	 * @param cacheNum     »º´æÊıÁ¿
-	 * @return
-	 */
-	@Override
-	public String genSnCode(String businessType, int cacheNum) {
-        // 1£º°´ÕÕbusinessType È¥»ñÈ¡¶ÔÓ¦µÄ snCode
-        SnCode snCode = dao.getByBusinessType(businessType,"");
-        int uuid = 0;
-        // 2£ºÒ»ÖÖÊÇÕÒµ½ÁË
-        if (null != snCode) {
-            uuid = updateBusinessTypeSnCode(snCode);
-        }else {
-            // 3£ºÕÒ²»µ½
-            uuid = createBusinessTypeSnCode(businessType);
+    /**
+     * ç”ŸæˆSnCode
+     *
+     * @param businessType ä¸šåŠ¡ç±»å‹
+     * @param cacheNum     ç¼“å­˜æ•°é‡
+     * @return
+     */
+    @Override
+    public String genMaxCode(String businessType, int cacheNum) {
+        // 1ï¼šæŒ‰ç…§businessType å»è·å–å¯¹åº”çš„ snCode
+        Object obj = CacheManager.getInstance().getMapNow().get(businessType);
+        int maxCode = 0;
+        // 2ï¼šæ‰¾åˆ°äº†
+        if (null != obj) {
+            maxCode = updateBusinessTypeMaxCode(businessType, cacheNum, (Integer) obj);
+        } else {
+            // 3ï¼šæ‰¾ä¸åˆ°
+            maxCode = createBusinessTypeMaxCode(businessType, (Integer) obj);
         }
-        return "";
+        return "" + maxCode;
     }
 
-    private int createBusinessTypeSnCode(String businessType) {
-        // 3.1£ºÄÇ¾ÍÉèÖÃ uuid=1£¬Õâ¾ÍÊÇÒ»¸öĞÂµÄÊı¾İ
-        SnCode vo = new SnCode(1, businessType, "");
-        // 3.2£ºÈ»ºó°ÑĞÂµÄuuid ĞÂÔö»Øµ½Êı¾İ´æ´¢ÖĞ
-        dao.createUuid(vo);
+    /**
+     * åˆ›å»º
+     * @param businessType  ä¸šåŠ¡ç±»å‹
+     * @param cacheNum      ç¼“å­˜æ•°é‡
+     * @return
+     */
+    private int createBusinessTypeMaxCode(String businessType, Integer cacheNum) {
+        // 3.1ï¼šé‚£å°±è®¾ç½® maxCode=1ï¼Œè¿™å°±æ˜¯ä¸€ä¸ªæ–°çš„æ•°æ®
+        SnCode vo = new SnCode(1, businessType);
+        // 3.2ï¼šç„¶åæŠŠæ–°çš„uuid æ–°å¢å›åˆ°æ•°æ®å­˜å‚¨ä¸­
+        dao.createSnCode(vo);
 
-        return 0;
+        //åŒæ—¶å‘ç¼“å­˜é‡Œé¢åŠ æ•°æ®
+        CacheManager.getInstance().getMapDB().put(businessType, cacheNum);
+        //ç¼“å­˜å½“å‰ä½¿ç”¨åºåˆ—å·åˆå§‹ä¸º1
+        CacheManager.getInstance().getMapNow().put(businessType, 1);
+
+        return 1;
     }
 
-    private int updateBusinessTypeSnCode(SnCode snCode) {
+    /**
+     * è¿”å›æ–°åºåˆ—å·ï¼Œå¹¶åˆ¤æ–­æ˜¯å¦éœ€è¦ä¿®æ”¹æ•°æ®å­˜å‚¨
+     * @param businessType  ä¸šåŠ¡ç±»å‹
+     * @param cacheNum      ç¼“å­˜çš„æ•°é‡
+     * @param uuid          ç°åœ¨ä½¿ç”¨çš„åºåˆ—å·maxCode
+     * @return
+     */
+    private int updateBusinessTypeMaxCode(String businessType, int cacheNum, int uuid) {
+        // 2.1ï¼šå°±æŠŠå¯¹åº”çš„uuid+1ä½œä¸ºæ–°çš„uuid
+        int newUuid = uuid + 1;
+        // 2.2ï¼šç„¶åå°±æŠŠè¿™ä¸ªæ–°çš„uuidä¿®æ”¹å›åˆ°æ•°æ®å­˜å‚¨ä¸­
+        CacheManager.getInstance().getMapNow().put(businessType, newUuid);
 
-        return 0;
+        //		åˆ¤æ–­æ˜¯å¦éœ€è¦ä¿®æ”¹æ•°æ®å­˜å‚¨
+        int dbUuid = CacheManager.getInstance().getMapDB().get(businessType);
 
+        if (newUuid >= dbUuid) {
+            SnCode snCodeVo = new SnCode(newUuid + cacheNum, businessType);
+
+            dao.updateSnCode(snCodeVo);
+            //åŒæ—¶æ›´æ–°mapDB
+            CacheManager.getInstance().getMapDB().put(businessType, snCodeVo.getMaxCode());
+        }
+
+        return newUuid;
     }
 }

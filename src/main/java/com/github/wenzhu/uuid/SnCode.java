@@ -19,10 +19,6 @@ public class SnCode {
      * 业务类型，可定义为ENUM
      */
     private String bussinessType;
-    /**
-     * 日期，格式为yyyy-MM-dd
-     */
-    private String modifyDate;
 
 
     public String getBussinessType() {
@@ -31,14 +27,6 @@ public class SnCode {
 
     public void setBussinessType(String bussinessType) {
         this.bussinessType = bussinessType;
-    }
-
-    public String getModifyDate() {
-        return modifyDate;
-    }
-
-    public void setModifyDate(String modifyDate) {
-        this.modifyDate = modifyDate;
     }
 
     public int getMaxCode() {
@@ -53,12 +41,10 @@ public class SnCode {
      * 带参数构造方法
      * @param maxCode       最大数
      * @param bussinessType 业务类型
-     * @param modifyDate    日期
      */
-    public SnCode(int maxCode, String bussinessType, String modifyDate) {
+    public SnCode(int maxCode, String bussinessType) {
         this.maxCode = maxCode;
         this.bussinessType = bussinessType;
-        this.modifyDate = modifyDate;
     }
 
     @Override
@@ -67,7 +53,6 @@ public class SnCode {
                 .omitNullValues()
                 .add("maxCode", maxCode)
                 .add("bussinessType", bussinessType)
-                .add("modifyDate", modifyDate)
                 .toString();
     }
 

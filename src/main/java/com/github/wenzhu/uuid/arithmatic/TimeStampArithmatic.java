@@ -1,16 +1,20 @@
 package com.github.wenzhu.uuid.arithmatic;
 
+import com.github.wenzhu.jodatime.DateHelper;
+
+import java.util.Date;
+
 public class TimeStampArithmatic implements IArithmatic{
 
 	/**
-	 * 通过业务类型计算出sncode
+	 * 鏃堕棿鏍煎紡缁勮sncode
 	 *
-	 * @param businessType 业务类型
-	 * @param cacheNum     缓存数量
+	 * @param businessType 涓氬姟绫诲瀷
+	 * @param cacheNum     缂撳瓨鏁伴噺
 	 * @return
 	 */
 	@Override
-	public String genSnCode(String businessType, int cacheNum) {
-		return null;
+	public String genMaxCode(String businessType, int cacheNum) {
+		return businessType + DateHelper.formateDate(new Date(),"yyyyMMdd");
 	}
 }

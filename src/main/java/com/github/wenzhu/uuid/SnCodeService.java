@@ -26,4 +26,5 @@ public class SnCodeService implements ISnCode {
                             boolean needArithmatic, IArithmatic ia, int cacheNum) {
         return null;
     }
+
 }
