@@ -16,7 +16,7 @@ public class AddressUtils {
 	 * 
 	 * @param content
 	 *            请求的参数 格式为：name=xxx&pwd=xxx
-	 * @param encoding
+	 * @param encodingString
 	 *            服务器端请求编码。如GBK,UTF-8等
 	 * @return
 	 * @throws UnsupportedEncodingException
