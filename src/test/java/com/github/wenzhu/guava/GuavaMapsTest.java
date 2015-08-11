@@ -1,29 +1,15 @@
 package com.github.wenzhu.guava;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import com.google.common.base.Function;
+import com.google.common.collect.*;
+import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
-
-import com.google.common.base.Function;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.ClassToInstanceMap;
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.HashBiMap;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSortedMap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
-import com.google.common.collect.MutableClassToInstanceMap;
-import com.google.common.collect.Ordering;
-import com.google.common.collect.Table;
-import com.google.common.collect.Tables;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class GuavaMapsTest {
 
