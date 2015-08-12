@@ -1,7 +1,7 @@
 package com.github.wenzhu.uuid.workload;
 
 /**
- * description:
+ * description:业务监控工厂类
  *
  * @author: jy.chen
  * @version: 1.0
@@ -12,7 +12,7 @@ public class WorkLoadFactory {
 	
 	public static IWorkLoad createIWorkLoad(){
 		
-		WorkLoadService wl = WorkLoadService.getInsatance();
+		WorkLoadService wl = WorkLoadService.getInstance();
 		if(wl.countObservers() == 0){
 			wl.addObserver(new CheckObserver());
 			wl.addObserver(new PauseObserver());

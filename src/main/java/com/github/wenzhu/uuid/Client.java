@@ -1,7 +1,7 @@
 package com.github.wenzhu.uuid;
 
 /**
- * description:
+ * description:客户端测试类
  *
  * @author: jy.chen
  * @version: 1.0
@@ -9,9 +9,9 @@ package com.github.wenzhu.uuid;
  */
 public class Client {
     public static void main(String[] args) {
-        for (int i = 0; i < 21; i++) {
+        for (int i = 0; i < 12; i++) {
             String uuid = MaxCodeFactory.generateISnCode().genSnCode("Doc"
-                    , true, "字第 # 号", "0", 30, false, null, 5
+                    , true, "字第 # 号", "0", 30, false, null, 10
             );
             System.out.println("doc uuid1===" + uuid);
         }

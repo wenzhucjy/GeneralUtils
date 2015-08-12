@@ -7,7 +7,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * description:
+ * description:检测序列号
  *
  * @author: jy.chen
  * @version: 1.0

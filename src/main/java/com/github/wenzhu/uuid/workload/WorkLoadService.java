@@ -1,11 +1,12 @@
 package com.github.wenzhu.uuid.workload;
 
-import java.util.HashMap;
+import com.google.common.collect.Maps;
+
 import java.util.Map;
 import java.util.Observable;
 
 /**
- * description:单例模式，监控maxCode的变化
+ * description:
  *
  * @author: jy.chen
  * @version: 1.0
@@ -17,11 +18,11 @@ public class WorkLoadService extends Observable implements IWorkLoad{
 
 	}
 	private static WorkLoadService wls = new WorkLoadService();
-	public static WorkLoadService getInsatance(){
+	public static WorkLoadService getInstance(){
 		return wls;
 	}
-	
-	private Map<String,Integer> mapCount = new HashMap<String,Integer>();
+
+	private Map<String, Integer> mapCount = Maps.newHashMap();
 	
 	public Map<String, Integer> getMapCount() {
 		return mapCount;

@@ -15,6 +15,6 @@ public class TimeStampArithmatic implements IArithmatic{
 	 */
 	@Override
 	public String genMaxCode(String businessType, int cacheNum) {
-		return businessType + DateHelper.formateDate(new Date(),"yyyyMMdd");
+		return businessType + DateHelper.formateDate(new Date(),"yyyyMMddHHmmss");
 	}
 }

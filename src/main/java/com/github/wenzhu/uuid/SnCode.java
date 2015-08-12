@@ -2,6 +2,8 @@ package com.github.wenzhu.uuid;
 
 import com.google.common.base.MoreObjects;
 
+import java.io.Serializable;
+
 /**
  * description:订单序列号
  *
@@ -9,7 +11,7 @@ import com.google.common.base.MoreObjects;
  * @version: 1.0
  * @since: 2015/8/11 - 10:03
  */
-public class SnCode {
+public class SnCode implements Serializable {
 
     /**
      * 最大值

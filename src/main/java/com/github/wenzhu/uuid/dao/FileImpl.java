@@ -19,6 +19,7 @@ public class FileImpl implements SnCodeDao {
     private Map<String, SnCode> map = null;
 
     private void initMap() {
+        System.out.println("init map ===================");
         if (map == null) {
             map = (Map<String, SnCode>) FileHelper.readFile(FILE_PATHNAME);
             if (map == null) {

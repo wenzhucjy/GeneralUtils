@@ -1,7 +1,7 @@
 package com.github.wenzhu.uuid.arithmatic;
 
 /**
- * description:运算接口
+ * description:算法接口
  *
  * @author: jy.chen
  * @version: 1.0
@@ -12,7 +12,7 @@ public interface IArithmatic {
      * 通过业务类型计算出sncode
      * @param businessType  业务类型
      * @param cacheNum      缓存数量
-     * @return
+     * @return  返回运算结果的字符串
      */
     public String genMaxCode(String businessType, int cacheNum);
 }

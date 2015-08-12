@@ -1,7 +1,7 @@
 package com.github.wenzhu.uuid.workload;
 
 /**
- * description:观察者模式，监控接口
+ * description:观察者模式，监控序列号编号情况
  *
  * @author: jy.chen
  * @version: 1.0
