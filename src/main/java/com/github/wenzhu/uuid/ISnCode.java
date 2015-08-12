@@ -16,7 +16,7 @@ public interface ISnCode {
      * @param businessType   业务类型
      * @param needFormat     是否需要格式
      * @param formatStr      格式的字符串
-     * @param padStr            填充的字符串
+     * @param padStr         填充的字符串
      * @param len            填充的长度
      * @param needArithmatic 是否需要运算
      * @param ia             运算的接口

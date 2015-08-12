@@ -1,7 +1,7 @@
 package com.github.wenzhu.uuid;
 
 /**
- * description:
+ * description:工厂用于生成ISnCode接口实现
  *
  * @author: jy.chen
  * @version: 1.0

@@ -515,6 +515,21 @@
 			<version>1.16</version>
 		</dependency>
 
+		<!--payOnline start-->
+		<!-- abchina -->
+		<dependency>
+			<groupId>com.abchina</groupId>
+			<artifactId>TrustPayClient</artifactId>
+			<version>V3.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.abchina</groupId>
+			<artifactId>TrustPayClient-B2B</artifactId>
+			<version>V1.3</version>
+		</dependency>
+		<!--payOnline end-->
+
+
 		<!-- j2ee web spec -->
 		<!-- update to servlet 3.0 for spring 4.0 MockHttpServletRequest  -->
 		<dependency>
