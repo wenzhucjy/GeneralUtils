@@ -1,25 +1,32 @@
+### Java template
 *.class
 
 # Package Files #
 *.war
 *.ear
 
-# Maven
+# Maven #
 target/
 log/
 
 *.pom.properties
 
 
-# Eclipse
+# Eclipse #
 .settings/
+.classpath
+.project
 .prefs
 *.prefs
 
-# Intellij
+# Intellij #
 .idea/
 *.iml
 *.iws
 
-# Mac
+# Mac #
 .DS_Store
+
+# jrebel #
+src/main/resources/rebel.xml
+*.rebel.xml
