@@ -38,7 +38,7 @@ public abstract class AbcBaseAction {
      * @param aQty            数量
      * @param redirectUrl     跳转URL
      * @param resultNotifyUrl 服务器通知URL,公网能访问的地址，而且端口号必须为 80 或者 443（http 默认端口为 80；https 默认端口为 443）
-     * @return
+     * @return  结果页面
      */
     protected String accessGateWay(HttpServletRequest request, String paymentType, String aOrderSn, String aOrderName, String aOrderAmount,
                                    Date aOrderDate, int aQty, String redirectUrl, String resultNotifyUrl) {
@@ -72,35 +72,43 @@ public abstract class AbcBaseAction {
      *
      * @param MSG  银行返回的加密信息,客户端需进行解密验签
      * @param type 业务类型
-     * @return  
+     * @return  结果
      */
     protected String notifyResult(String MSG, String type) {
         String pcKey = "";
+        String resultUrl = "";
+        //1.判断MSG是否存在
         if (StringUtils.isNotBlank(MSG)) {
-            AbcPaymentResult tResult = null;
             try {
-                tResult = new AbcPaymentResult(MSG);
+                //2.把MSG进行转换GBK编码解密
+                AbcPaymentXmlResultGBK xmlResultGBK = new AbcPaymentXmlResultGBK(MSG);
+                //3.封装解码后的数据
+                AbcPaymentResult tResult = new AbcPaymentResult(xmlResultGBK);
+                LOG.info("ABC paymentResult : {}", tResult);
+                // 4、判断支付结果处理状态，进行后续操作
+                if (xmlResultGBK.isSuccess()) {
+                    // 5、支付成功并且验签、解析成功
+                    // 以下是商户业务逻辑代码
+                    pcKey = MD5Encrypt.sign(tResult.getOrderNo(), rsaPrivateKey, inputCharSet);
+                    bussinessDealCode(tResult);
+                } else {
+                    // 6、支付成功但是由于验签或者解析报文等操作失败
+                    LOG.error("ABC Payonline notifyResult fail, MSG : [{}] ==> fails; code: [{}], error message: [{}]",
+                            MSG, tResult.getReturnCode(), xmlResultGBK.getErrorMessage());
+                }
+                // 设定商户结果显示页面
+                resultUrl = String.format("%s/%s/payment%s", receiveNotifyUrlPrefix, type,
+                        (xmlResultGBK.isSuccess() ? "Success?orderNo=" + tResult.getOrderNo() + "&pcKey=" + pcKey
+                                : "Fail?orderNo=" + tResult.getOrderNo() + "&pcKey=" + pcKey));
+
+                LOG.info("abcBaseController resultUrl: [{}]", resultUrl);
+
             } catch (TrxException e) {
-                LOG.error("TrxException detail message :[{}] , code: [{}], error message: [{}]", e.getDetailMessage(), e.getCode(), e
-                        .getMessage());
+                // 支付成功但是由于验签或者解析报文等操作失败
+                LOG.error("ABC Payonline notifyResult fail, MSG : [{}] ==> fails; code: [{}], error message: [{}] , detail message : [{}]",
+                        MSG, e.getCode(), e.getMessage(), e.getDetailMessage());
             }
-            LOG.info("ABC paymentResult : {}", tResult);
-            // 2、判断支付结果处理状态，进行后续操作
-            if (tResult.isSuccess()) {
-                // 3、支付成功并且验签、解析成功
-                // 以下是商户业务逻辑代码
-                pcKey = MD5Encrypt.sign(tResult.getOrderNo(), rsaPrivateKey, inputCharSet);
-                bussinessDealCode(tResult);
-            } else {
-                // 4、支付成功但是由于验签或者解析报文等操作失败
-                LOG.error("ABC Payonline notifyResult fail, MSG : [{}] ==> fails; code: [{}], error message: [{}]",
-                        MSG, tResult.getReturnCode(), tResult.getErrorMessage());
-            }
-            // 设定商户结果显示页面
-            String resultUrl = String.format("%s/%s/payment%s", receiveNotifyUrlPrefix, type,
-                    (tResult.isSuccess() ? "Success?orderNo=" + "" + "&pcKey=" + pcKey : "Fail?orderNo=" + ""
-                            + "&pcKey=" + pcKey));
-            LOG.debug("abcBaseController resultUrl: [{}]", resultUrl);
+            //7.跳转到支付结果页面
             return String.format("<URL>%1$s</URL>\n<HTML>\n<HEAD>\n<meta http-equiv=\"refresh\" content=\"0; "
                     + "url='%1$s'\">\n</HEAD>\n</HTML>", resultUrl); // <URL>%1$s</URL>
         } else {

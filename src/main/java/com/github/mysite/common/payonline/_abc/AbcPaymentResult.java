@@ -1,71 +1,96 @@
 package com.github.mysite.common.payonline._abc;
 
-import com.abc.trustpay.client.TrxException;
-import com.abc.trustpay.client.ebus.PaymentResult;
 import com.google.common.base.MoreObjects;
 
 /**
- * description:中国农业银行支付返回信息 —— 新电子商务接口V3.0.2
+ * description:中国农业银行支付返回结果 —— 新电子商务接口V3.0.2
  *
  * @author: jy.chen
  * @version: 1.0
- * @since: 2015/8/25 - 17:42
+ * @since: 2015/8/26 - 17:35
  */
-public class AbcPaymentResult extends PaymentResult {
-    
-    
-    public AbcPaymentResult(String aMessage) throws TrxException {
-        super(aMessage);
+public class AbcPaymentResult {
+
+    private String orderNo;             // 订单号
+    private String amount;              // 订单金额
+    private String batchNo;             // 交易凭证号（建议使用 iRspRef 作为对账依据）
+    private String hostDate;            // 银行交易日期（YYYY/MM/DD）
+    private String hostTime;            // 银行交易时间（HH:MM:SS）
+    private String voucherNo;           // 交易凭证号
+    private String merchantRemarks;     // 商户的备注信息
+    private String notifyType;          // 支付结果通知方式
+    private String payType;             // 消费者支付方式
+    private String rspRef;              // 银行返回交易流水号
+    private String returnCode;          // 返回CODE
+
+    /**
+     * 默认构造方法
+     */
+    public AbcPaymentResult() {
+
     }
 
-    // 订单编号
+    /**
+     * 带参数构造方法
+     *
+     * @param result
+     */
+    public AbcPaymentResult(AbcPaymentXmlResultGBK result) {
+        this.orderNo = result.getValue("OrderNo");//订单号
+        this.amount = result.getValue("Amount");//订单金额
+        this.batchNo = result.getValue("BatchNo");//交易批次号
+        this.voucherNo = result.getValue("VoucherNo");//交易凭证号
+        this.hostTime = result.getValue("HostTime");
+        this.hostDate = result.getValue("HostDate");
+        this.merchantRemarks = result.getValue("MerchantRemarks");//商户的备注信息
+        this.notifyType = result.getValue("NotifyType");//支付结果通知方式
+        this.payType = result.getValue("PayType");
+        this.rspRef = result.getValue("iRspRef");//银行返回交易流水号
+        this.returnCode = result.getValue("ReturnCode");
+    }
+
     public String getOrderNo() {
-        return this.getValue("OrderNo");
+        return orderNo;
     }
 
-    // 订单金额
     public String getAmount() {
-        return this.getValue("Amount");
+        return amount;
     }
 
-    // 交易批次号
     public String getBatchNo() {
-       return this.getValue("BatchNo");
+        return batchNo;
     }
 
-    // 交易凭证号（建议使用 iRspRef 作为对账依据）
-    public String getVoucherNo() {
-       return this.getValue("VoucherNo");
-    }
-
-    // 银行交易日期（YYYY/MM/DD）
     public String getHostDate() {
-        return this.getValue("HostDate");
+        return hostDate;
     }
 
-    // 银行交易时间（HH:MM:SS）
     public String getHostTime() {
-       return this.getValue("HostTime");
+        return hostTime;
     }
 
-    // 商户备注信息（商户在支付请求时所提交的信息）
+    public String getVoucherNo() {
+        return voucherNo;
+    }
+
     public String getMerchantRemarks() {
-        return this.getValue("MerchantRemarks");
+        return merchantRemarks;
     }
 
-    // 消费者支付方式
-    public String getPayType() {
-        return this.getValue("PayType");
-    }
-
-    // 支付结果通知方式
     public String getNotifyType() {
-       return this.getValue("NotifyType");
+        return notifyType;
     }
 
-    // 银行返回交易流水号
-    public String getiRspRef() {
-       return this.getValue("iRspRef");
+    public String getPayType() {
+        return payType;
+    }
+
+    public String getRspRef() {
+        return rspRef;
+    }
+
+    public String getReturnCode() {
+        return returnCode;
     }
 
     @Override
@@ -81,8 +106,8 @@ public class AbcPaymentResult extends PaymentResult {
                 .add("merchantRemarks", this.getMerchantRemarks())
                 .add("payType", this.getPayType())
                 .add("notifyType", this.getNotifyType())
-                .add("iRspRef", this.getiRspRef())
-                .add("ReturnCode",this.getReturnCode())
+                .add("iRspRef", this.getRspRef())
+                .add("ReturnCode", this.getReturnCode())
                 .toString();
     }
 }
