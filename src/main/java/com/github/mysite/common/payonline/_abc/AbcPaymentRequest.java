@@ -41,6 +41,7 @@ public class AbcPaymentRequest extends PaymentRequest {
      * @param redirectUrl 重定向URL
      * @return 返回信息
      */
+    @SuppressWarnings("unchecked")
     public String postRequestValue(HttpServletRequest request,String redirectUrl) {
         super.dicOrder.putAll(abcDicOrder.bulidDicOrder());
         super.orderitems.put(1, abcDicOrderItem.bulidAbcDicretMap());
