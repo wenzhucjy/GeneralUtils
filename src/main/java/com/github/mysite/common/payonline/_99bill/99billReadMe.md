@@ -1,4 +1,4 @@
-
+﻿
 ##快钱人民币网关接入文档
 
 ----------
@@ -19,6 +19,7 @@
 > 快钱提供两套环境，一套是测试环境，另一套是生产环境。一般建议商户先在快钱的测试环境做测试， 熟悉快钱的人民币网关之后再迁移到生产环境做测试。如果商户熟悉快钱的人民币网关接口和流程，可以直接在快钱的生产环境做测试。
 
 ## **2.快钱生产环境联调步骤**
+
 ### **2.1 证书生成**
 >  从快钱的java代码包中，可以看到`99bill.cert.rsa.20340630.cer` 和 `99bill-rsa.pfx`两个证书，其中pfx证书用于send页面对提交的参数组成串后的签名，主要作用是防止商户提交的数据传输过程中被篡改。cer证书用于receive页面中对快钱返回的参数进行验签，主要作用是验证快钱返回给商户的参数没有被篡改。
 
@@ -38,12 +39,16 @@
 入转换命令 pkcs12 -in 99bill-rsa.pfx -passinpass:此处输入商户第 4 步设置的密码 -nodes
 -out 99bill-rsa.pem，按 enter 即可。进入 openssl 的 bin 目录，此时可以看到 pem 格式
 证书已经生成。
+
 ### **2.2 证书上传下载**
+
 >  1. 上传证书，登陆[www.99bill.com](http://www.99bill.com)，进入安全设置-商户证书-商户证书上传（选择产品或功能：人民币网关；悬着上传文件：上传生成的`public-rsa.cer`证书），证书的有效期为750天。
 >  2.  证书下载，登陆[www.99bill.com](http://www.99bill.com)，进入安全设置-商户证书-快钱证书下载，选择`RSA`证书，若下载不成功，可直接向快钱技术支持索取。
 
 ## **3.接口开发**
+
 ### **3.1 功能说明及流程**
+
 >  整体流程如下：
 用户在商户选择产品戒服务，在下订单完成后，商户网站等系统会将该订单号及对庒订单金额以及收款方信息等相关资料提交到快钱，然后跳转到快钱页面进行支付。当支付完成后，快钱通知商户支付结果，并且根据商户指定的地址跳转到商户指定页面。商户在接收到支付结果之后，可以对数据进行相应更新，然后在显示给用户的页面中作出相应提示。
 
@@ -54,9 +59,13 @@
  - 如果是使用PKI方式，接入前要准备好商户证书，可以用 OPENSSL 工具生成，具体生成命令可以参考 OPENSSL 命令集，OPENSSL工具可以从快钱后台下载，也可以从技术支持处获得。
  
 ### **3.3 参数说明**
+
 ### **3.3.1 商户提交到快钱**
+
 > 快钱人民币网关提交地址 ： [https://www.99bill.com/gateway/recvMerchantInfoAction.htm](https://www.99bill.com/gateway/recvMerchantInfoAction.htm)<br/>
 移动网关支付：[https://www.99bill.com/mobilegateway/recvMerchantInfoAction.htm](https://www.99bill.com/mobilegateway/recvMerchantInfoAction.htm)
+
+
 |  参数名称  |参数含义  |  为空   |  参数说明 |
 |---|---|---|---|
 | inputCharset   |  字符集 | 否  |  固定选择值：1代表 UTF-8; 2 代表 GBK; 3 代表 GB2312 |
@@ -96,8 +105,12 @@
 | extDataType  | 附加信息类型  |是   |字符串   |
 | extDataContent  | 附加信息  | 是  | XML格式  |
 | signMsg  | 签名字符串  | 否  |param1={value1}&param2={value2}...&paramn={valuen}，然后进行商户私钥证书加密形成密文后进行1024位BASE64转码  |
+
+
 ### **3.3.2 快钱返回到商户**
+
 > 返回地址 pageUrl 戒 bgUrl 对应的地址只填写 pageUrl 时，或者bgUrl所指定的地址不可用时，快钱会将支付结果直接以 GET 方式发送到 pageUrl 对应的地址
+
 |  参数名称  |参数含义 |  参数说明 |
 |---|---|---|---|
 | merchantAcctId  |  人民币账号  |接收款项的人民币账号   |
@@ -121,22 +134,29 @@
 |payResult|处理结果|10：支付成功|
 |errCode|错误代码|失败时返回的错误代码，可以为空|
 |signMsg|签名字符串|对亍所有值不为空的参数及对应值， 按照如上顺序及如下规则组成字符串，DSA或RSA方式：param1={value1}&...&paramn={valuen}，然后进行快钱证书加密形成密文后进行1024位BASE64转码|
+
 ### **3.4 开发提示**
+
 ### **3.4.1 签名字符串**
+
 >  支付网关接口，在商户提交订单到快钱时和快钱返回结果给商户时都含有签名字符串signMsg，但两个签名字符串并无直接联系。`DSA或RSA方式都是非对称的加密方式`，商户提交用商户私钥证书（`99bill-rsa.pfx`，详见openssl工具生成商户私钥证书）加密，快钱通过商户的公钥证书来解密；快钱返回时是通过快钱私钥证书
 加密，商户用快钱公钥证书（`99bill.cert.rsa.20340630.cer`）解密来验签。
 
+
  - 当 signType=4时，加密串为：
+ 
 ```bash
 inputCharset={inputCharset}&pageUrl={pageUrl}&bgUrl={bgUrl}&version={version}&language={language}&signType={signType}&merchantAcctId={merchantAcctId}&payerName={payerName}&payerContactType={payerContactType}&payerContact={payerContact}&payerIdType={payerIdType}&payerId={payerId}&payerIP={payerIP}&orderId={orderId}&orderAmount={orderAmount}&orderTime={orderTime}&orderTimestamp={orderTimestamp}&productName={productName}&productNum={productNum}&productId={productId}&productDesc={productDesc}&ext1={ext1}&ext2={ext2}&payType={payType}&bankId={bankId}&cardIssuer={cardIssuer}&cardNum={cardNum}&remitType={remitType}&remitCode={remitCode}&redoFlag={redoFlag}&pid={pid}&submitType={submitType}&orderTimeOut={orderTimeOut}&extDataType={extDataType}&extDataContent={extDataContent}
+
 #商户使用商户生成的商户pfx私钥进行加密。
 ```
 
- - 快钱返回给商户时的组成加密串的示例如下（假定全部参数值都不为空） ：
+快钱返回给商户时的组成加密串的示例如下（假定全部参数值都不为空） ：
+
+ - #当signType=4时，加密串为：
 ```bash
-#当signType=4时，加密串为：
-merchantAcctId={merchantAcctId}&version={version}&language={language}&signType={signType}&payType={payType}&bankId={bankId}&orderId={or
-derId}&orderTime={orderTime}&orderAmount={orderAmount}&bindCard={bindCard}&bindMobile={bindMobile}&dealId={dealId}&bankDealId={bankDealId}&dealTime={dealTime}&payAmount={payAmount}&fee={fee}&ext1={ext1}&ext2={ext2}&payResult={payResult}&errCode={errCode}
+merchantAcctId={merchantAcctId}&version={version}&language={language}&signType={signType}&payType={payType}&bankId={bankId}&orderId={orderId}&orderTime={orderTime}&orderAmount={orderAmount}&bindCard={bindCard}&bindMobile={bindMobile}&dealId={dealId}&bankDealId={bankDealId}&dealTime={dealTime}&payAmount={payAmount}&fee={fee}&ext1={ext1}&ext2={ext2}&payResult={payResult}&errCode={errCode}
+
 #注：商户使用快钱生成的快钱公钥进行解密
 ```
 所有参与签名的参数及其值的大小写必须与示例保持一致。
@@ -148,7 +168,8 @@ derId}&orderTime={orderTime}&orderAmount={orderAmount}&bindCard={bindCard}&bindM
  - 只填写pageUrl时，快钱会将支付结果直接以GET方式发送到pageUrl对应的地址，确定连接到接受地址后只发送一次通知。商户接收到支付结果之后，根据支付结果进行相应的商户业务逻辑处理，并且且给支付人显示页面提示信息。商户仍然需要对重复接收支付结果
 进行判断，以防止因刷新引起重复接收支付结果而进行误处理。
 
- - 如果只填写了bgUrl，快钱会将支付结果以GET方式发送到bgUrl对应的地址，商户接收到支付结果并且进行相应的商户业务逻辑处理之后，需要按照指定的方式输出内容，告诉快钱已经成功接收并处理完毕，示例如下
+ - 如果只填写了bgUrl，快钱会将支付结果以GET方式发送到bgUrl对应的地址，商户接收到支付结果并且进行相应的商户业务逻辑处理之后，需要按照指定的方式输出内容，告诉快钱已经成功接收并处理完毕，示例如下：
+ 
 ```java
 
     <result>1</result>
@@ -157,6 +178,7 @@ derId}&orderTime={orderTime}&orderAmount={orderAmount}&bindCard={bindCard}&bindM
     </redirecturl>
 
 ```
+
 > 
 如果 result 标签里面的值为数字 1 时，快钱会认为商户已经接收到支付结果并成功处理，快钱会按照 redirecturl标签里面提供的地址，跳转到新的页面，同时把支付信息参数再次带过来。用户可以在新的页面里面看到商户给出的页面提示信息。如果 result 标签里面的值丌为数字 1 时，快钱会在 18 小时内，**不断按照如上方式给商户发送支付结果并判断 result 的值，直到 result 的值为 1 为止**。在历次重复发送中，初期快钱发送时间间隔为5秒，以后发送的时间间隔会逐步加长。快钱可能会根据需要调整支付结果通知的频率和次数。
 
