@@ -1,22 +1,22 @@
 package com.github.mysite.common.guava;
 
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.junit.Test;
-
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class GuavaJoinerSplitTest {
 	
@@ -33,14 +33,17 @@ public class GuavaJoinerSplitTest {
 	// Convert Map to String Using Joiner
 	@Test
 	public void whenConvertMapToString_thenConverted() {
-	    Map<String, Integer> salary = Maps.newHashMap();
-	    salary.put("John", 1000);
-	    salary.put("Jane", 1500);
-	    String result = Joiner.on(" , ").withKeyValueSeparator(" = ")
-	                                    .join(salary);
-	 
-	    assertThat(result, containsString("John = 1000"));
-	    assertThat(result, containsString("Jane = 1500"));
+	    Map<String, String> salary = Maps.newHashMap();
+        salary.put("d", "");
+	    salary.put("John", "1000");
+	    salary.put("Jane", "1500");
+        salary.put("b", "");
+        salary.put("c", null);
+       
+       
+        final Map<String, String> stringObjectMap = Maps.filterValues(salary, StringUtils::isNotBlank);
+        String result = Joiner.on("&").withKeyValueSeparator("=").join(stringObjectMap);
+		assertThat(result, containsString("John=1000&Jane=1500"));
 	}
 	
 	

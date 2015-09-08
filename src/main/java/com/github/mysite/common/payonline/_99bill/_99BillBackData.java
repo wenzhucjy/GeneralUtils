@@ -6,43 +6,47 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * description:快钱支付返回的封装数据
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/12 - 17:29
+ * @author  jy.chen
+ * @version  1.0
+ * @since  2015-8-12 - 17:29
  */
 public class _99BillBackData {
 
     /**
      * 处理结果， 10支付成功，11 支付失败，00订单申请成功，01 订单申请失败
      */
-    public static String[] PayResults = new String[]{"10", "11", "00", "01"};
+	public static String[]	PayResults	= new String[] { "10", "11", "00", "01" };
 
-    private String merchantAcctId; // 人民币网关账号，该账号为11位人民币网关商户编号+01,该参数必填
-    private String version;// 网关版本，固定值：v2.0
-    private String language; // 语言种类，1代表中文显示，2代表英文显示。默认为1
-    private String signType; // 签名类型,该值为4，代表PKI加密方式(DSA 戒者 RSA签名方式),该参数必填
-    private String payType;// 支付方式，一般为00，代表所有的支付方式。如果是银行直连商户，该值为10（只显示银行卡支付方式），必填
-    private String bankId;// 银行代码，如果payType为00，该值可以为空；如果payType为10，该值必须填写，具体请参考银行列表
-    private String orderId;// 商户订单号，以下采用时间来定义订单号，商户可以根据自己订单号的定义规则来定义该值，不能为空
-    private String orderTime; // 订单提交时间，格式：yyyyMMddHHmmss，如：20071117020101，不能为空
-    private String orderAmount;// 订单金额，金额以“分”为单位，商户测试以1分测试即可，切勿以大金额测试。该参数必填
+	private String			merchantAcctId;										    // 人民币网关账号，该账号为11位人民币网关商户编号+01,该参数必填
+	private String			version;												// 网关版本，固定值：v2.0；若为移动网关，则为mobile1.0
+	private String			language;												// 语言种类，1代表中文显示，2代表英文显示。默认为1
+	private String			signType;												// 签名类型,该值为4，代表PKI加密方式(DSA或者 RSA签名方式),该参数必填
+	private String			payType;												// 支付方式，一般为00，代表所有的支付方式。如果是银行直连商户，该值为10（只显示银行卡支付方式），必填
+	private String			bankId;												    // 银行代码，如果payType为00，该值可以为空；如果payType为10，该值必须填写，具体请参考银行列表
+	private String			orderId;												// 商户订单号，以下采用时间来定义订单号，商户可以根据自己订单号的定义规则来定义该值，不能为空
+	private String			orderTime;												// 订单提交时间，格式：yyyyMMddHHmmss，如：20071117020101，不能为空
+	private String			orderAmount;											// 订单金额，金额以“分”为单位，商户测试以1分测试即可，切勿以大金额测试。该参数必填
 
-    private String bindCard;// 已绑短卡号
-    private String bindMobile;// 已绑短手机尾号
+	private String			bindCard;												// 已绑短卡号
+	private String			bindMobile;												// 已绑短手机尾号
 
-    private String dealId; // 快钱交易号，商户每一笔交易都会在快钱生成一个交易号
-    private String bankDealId;// 银行交易号 ，快钱交易在银行支付时对应的交易号，如果不是通过银行卡支付，则为空
-    private String dealTime;// 快钱交易时间，快钱对交易进行处理的时间,格式：yyyyMMddHHmmss
-    private String payAmount; // 商户实际支付金额
-    // 以分为单位。比方10元，提交时金额应为1000。该金额代表商户快钱账户最终收到的金额
-    private String fee;// 费用，快钱收取商户的手续费，单位为分
-    private String ext1;// 扩展字段1，商户可以传递自己需要的参数，支付完快钱会原值返回，可以为空
-    private String ext2;// 扩展自段2，商户可以传递自己需要的参数，支付完快钱会原值返回，可以为空
-    private String payResult;// 处理结果， 10支付成功，11 支付失败，00订单申请成功，01 订单申请失败
-    private String errCode;// 错误代码 ，请参照《人民币网关接口文档》最后部分的详细解释
+	private String			dealId;												    // 快钱交易号，商户每一笔交易都会在快钱生成一个交易号
+	private String			bankDealId;												// 银行交易号
+																					// ，快钱交易在银行支付时对应的交易号，如果不是通过银行卡支付，则为空
+	private String			dealTime;												// 快钱交易时间，快钱对交易进行处理的时间,格式：yyyyMMddHHmmss
+	private String			payAmount;												// 商户实际支付金额以分为单位。比方10元，提交时金额应为1000。该金额代表商户快钱账户最终收到的金额
+	private String			fee;													// 费用，快钱收取商户的手续费，单位为分
+	private String			ext1;													// 扩展字段1，商户可以传递自己需要的参数，支付完快钱会原值返回，可以为空
+	private String			ext2;													// 扩展自段2，商户可以传递自己需要的参数，支付完快钱会原值返回，可以为空
+	private String			payResult;												// 处理结果，
+																					// 10支付成功，11
+																					// 支付失败，00订单申请成功，01
+																					// 订单申请失败
+	private String			errCode;												// 错误代码
+																					// ，请参照《人民币网关接口文档》最后部分的详细解释
 
-    private String signMsgVal; // 待签名的拼接字符串
-    private String signMsg; // 快钱返回的签名字符串
+	private String			signMsgVal;											    // 待签名的拼接字符串
+	private String			signMsg;												// 快钱返回的签名字符串
 
     public String getMerchantAcctId() {
         return merchantAcctId;
@@ -215,9 +219,10 @@ public class _99BillBackData {
     /**
      * 快钱返回给商户时的组成加密串
      *
-     * @return
+     * @return 待解密的加密字符串
      */
     public String getSignMsgVal() {
+        
         this.signMsgVal =
                 StringUtils.join(
                         "merchantAcctId=", merchantAcctId,
@@ -247,7 +252,7 @@ public class _99BillBackData {
     /**
      * 用快钱的公钥进行验签
      *
-     * @return
+     * @return  验签结果 true 为验签成功，false 为验签失败
      */
     public boolean enCodeBy99billCer() {
         return Pkipair.enCodeByCer(getSignMsgVal(), this.signMsg);

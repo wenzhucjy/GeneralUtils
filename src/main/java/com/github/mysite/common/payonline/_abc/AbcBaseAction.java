@@ -14,14 +14,17 @@ import java.util.Date;
 /**
  * description:中国农业银行支付订单 —— 新电子商务接口V3.0.2
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/25 - 17:35
+ * @author  jy.chen
+ * @version  1.0
+ * @since  2015-8-25 17:35
  */
 public abstract class AbcBaseAction {
 
+    /**
+     * Logger for this class
+     */
     private static final Logger LOG = LoggerFactory.getLogger(AbcBaseAction.class);
-
+    
     protected String receiveNotifyUrlPrefix = "";   //服务器通知URL的前缀
     protected String inputCharSet = "UTF-8";        //编码格式
     protected String rsaPrivateKey = "";            //加密私钥
@@ -42,7 +45,7 @@ public abstract class AbcBaseAction {
      */
     protected String accessGateWay(HttpServletRequest request, String paymentType, String aOrderSn, String aOrderName, String aOrderAmount,
                                    Date aOrderDate, int aQty, String redirectUrl, String resultNotifyUrl) {
-
+        
         String formatDate = DateHelper.formateDate(aOrderDate, AbcDicOrder.DATE_PATTERNS[9]);
         //订单过期时间
         String orderTimeoutDate = DateHelper.formateDate(DateHelper.plusDays(aOrderDate, 10), AbcDicOrder.DATE_PATTERNS[8]);

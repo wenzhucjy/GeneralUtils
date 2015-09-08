@@ -5,9 +5,9 @@ import com.abc.trustpay.client.*;
 /**
  * description:中国农业银行支付返回XML数据,需进行GBK编码转换 —— 新电子商务接口V3.0.2
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/27 - 10:47
+ * @author  jy.chen
+ * @version  1.0
+ * @since  2015-8-27  10:47
  */
 public class AbcPaymentXmlResultGBK extends TrxResponse {
     /**

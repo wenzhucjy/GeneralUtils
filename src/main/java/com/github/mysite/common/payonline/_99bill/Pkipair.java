@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.security.KeyStore;
@@ -22,18 +21,22 @@ import java.security.cert.X509Certificate;
  * <p>快钱PKI加密，即DSA 或者 RSA签名方式</p>
  * <p>商户提交用商户私钥证书加密，快钱通过商户的公钥证书来解密；快钱返回时是通过快钱私钥证书加密，商户用快钱公钥证书解密来验签</p>
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/12 - 17:31
+ * @author jy.chen
+ * @version 1.0
+ * @since 2015-8-12  17:31
  */
 public class Pkipair {
     /**
      * Logger for this class
      */
     private static final Logger LOG = LoggerFactory.getLogger(Pkipair.class);
+    /**
+     * 密码：xxx,详见生成商户私钥证书的指令
+     */
+    public static final String KEY_PWD = "1234";
 
     /**
-     * 使用商户生成的商户私钥(99bill-rsa.pfx,密码：xxx,详见生成证书的指令)进行加密
+     * 使用商户生成的商户私钥(99bill-rsa.pfx)进行加密
      *
      * @param signMsg
      * @return
@@ -50,13 +53,12 @@ public class Pkipair {
             KeyStore ks = KeyStore.getInstance("PKCS12");
             ksfis = Pkipair.class.getClassLoader().getResourceAsStream("99bill-rsa.pfx");
             // 读取密钥仓库文件 99bill-rsa.pfx
-            //String file = String.format("%s99bill-rsa.pfx", Thread.currentThread().getContextClassLoader().getResource("").toURI().getPath());
             // 获取文件输入流
             //ksfis = new FileInputStream(file);
             // 实例一个带有缓冲区域的InputStream
             ksbufin = new BufferedInputStream(ksfis);
-            // 证书密码 Baiyu@2013
-            char[] keyPwd = "Baiyu@2013".toCharArray();
+            // 证书密码 xxx
+            char[] keyPwd = KEY_PWD.toCharArray();
             ks.load(ksbufin, keyPwd);
             // 从密钥仓库得到私钥
             PrivateKey priK = (PrivateKey) ks.getKey("test-alias", keyPwd);
@@ -96,12 +98,14 @@ public class Pkipair {
         Assert.notNull(sign, "sign must not be null");
         LOG.debug("99bill notity signMsgVal : [{}]", signMsgVal);
         boolean flag = false;
-        FileInputStream inStream = null;
+        InputStream inStream = null;
         try {
             // 读取快钱的公钥证书文件
-            String file = String.format("%s99bill.cert.rsa.20340630.cer", 
-                    Thread.currentThread().getContextClassLoader().getResource("").toURI().getPath());
-            inStream = new FileInputStream(file);
+            //String file = String.format("%s99bill.cert.rsa.20340630.cer", 
+            //        Thread.currentThread().getContextClassLoader().getResource("").toURI().getPath());
+            //inStream = new FileInputStream(file);
+            //通过ClassLoader类加载器
+            inStream = Pkipair.class.getClassLoader().getResourceAsStream("99bill.cert.rsa.20340630.cer");
             // 生成一个实现指定证书类型的 CertificateFactory 对象
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
             //从证书文件*.cer里读取证书信息

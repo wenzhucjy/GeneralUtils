@@ -13,6 +13,7 @@ import java.math.BigDecimal;
  * @since: 2015/8/13 - 15:22
  */
 public class CartItem {
+    
     private Goods goods;
     private BigDecimal price = new BigDecimal(0);
     private Integer quantity = 1;

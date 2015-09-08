@@ -11,9 +11,9 @@ import java.util.Map;
 /**
  * description:中国农业银行支付订单 —— 新电子商务接口V3.0.2
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/12 - 17:35
+ * @author : jy.chen
+ * @version : 1.0
+ * @since : 2015/8/12 - 17:35
  */
 public class AbcDicOrder {
 	
