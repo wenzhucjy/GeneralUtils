@@ -16,7 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 public class AlipayMobileSendData {
 
 
-    private String parnter = AlipayConfig.partner;
+    private String partner = AlipayConfig.partner;
     private String seller_id = AlipayConfig.WIDseller_email;
     private String out_trade_no;
     private String total_fee;
@@ -48,7 +48,7 @@ public class AlipayMobileSendData {
     public String buildRequestParam() {
         String strParam =
                 StringUtils.join(
-                        "partner=\"", this.parnter,
+                        "partner=\"", this.partner,
                         "\"&seller_id=\"", this.seller_id,
                         "\"&out_trade_no=\"", Strings.nullToEmpty(this.out_trade_no),
                         "\"&subject=\"", Strings.nullToEmpty(this.subject),
@@ -78,7 +78,7 @@ public class AlipayMobileSendData {
     public String toString() {
         return MoreObjects.toStringHelper("alipay mobile send data")
                 .omitNullValues()
-                .add("parnter", this.parnter)
+                .add("parnter", this.partner)
                 .add("seller_id", this.seller_id)
                 .add("out_trade_no", this.out_trade_no)
                 .add("subject", this.subject)
