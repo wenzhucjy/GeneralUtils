@@ -10,22 +10,27 @@ import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.httpclient.util.IdleConnectionTimeoutThread;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * description:HttpClient方式访问，获取远程的Http数据
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/14 - 11:00
+ * @author : jy.chen
+ * @version : 1.0
+ * @since : 2015/8/14 - 11:00
  */
 public class HttpProtocolHandler {
-
+    /**
+     * Logger for HttpProtocolHandler
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(HttpProtocolHandler.class);
+    
     private static String DEFAULT_CHARSET = "GBK";
 
     /**
@@ -155,14 +160,8 @@ public class HttpProtocolHandler {
                 response.setByteResult(method.getResponseBody());
             }
             response.setResponseHeaders(method.getResponseHeaders());
-        } catch (UnknownHostException ex) {
-
-            return null;
-        } catch (IOException ex) {
-
-            return null;
         } catch (Exception ex) {
-
+            LOG.error("HttpClient executeMethod fail , detail msg : [{}]",ex);
             return null;
         } finally {
             method.releaseConnection();

@@ -1,27 +1,15 @@
 package com.github.mysite.common.guava;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Set;
-
-import org.junit.Test;
-
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
+import org.junit.Test;
+
+import java.util.*;
+
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 @SuppressWarnings("unused")
 public class GuavaCollectionsExamplesTest {
@@ -62,11 +50,7 @@ public class GuavaCollectionsExamplesTest {
     @Test
     public final void whenCheckingIfCollectionContainsElementsByCustomMatch1_thenContains() {
         final Iterable<String> theCollection = Lists.newArrayList("a", "bc", "def");
-        final boolean contains = Iterables.any(theCollection, new Predicate<String>() {
-            public final boolean apply(final String input) {
-                return input.length() == 1;
-            }
-        });
+        final boolean contains = Iterables.any(theCollection, input -> input.length() == 1);
 
         assertTrue(contains);
     }
@@ -75,11 +59,7 @@ public class GuavaCollectionsExamplesTest {
     public final void whenCheckingIfCollectionContainsElementsByCustomMatch2_thenContains() {
         final Set<String> theCollection = Sets.newHashSet("a", "bc", "def");
 
-        final boolean contains = !Sets.filter(theCollection, new Predicate<String>() {
-            public final boolean apply(final String input) {
-                return input.length() == 1;
-            }
-        }).isEmpty();
+        final boolean contains = !Sets.filter(theCollection, input -> input.length() == 1).isEmpty();
 
         assertTrue(contains);
     }
@@ -88,11 +68,7 @@ public class GuavaCollectionsExamplesTest {
     public final void whenCheckingIfCollectionContainsElementsByCustomMatch3_thenContains() {
         final Iterable<String> theCollection = Sets.newHashSet("a", "bc", "def");
 
-        final boolean contains = Iterables.find(theCollection, new Predicate<String>() {
-            public final boolean apply(final String input) {
-                return input.length() == 1;
-            }
-        }) != null;
+        final boolean contains = Iterables.find(theCollection, input -> input.length() == 1) != null;
 
         assertTrue(contains);
     }
@@ -132,6 +108,7 @@ public class GuavaCollectionsExamplesTest {
     public final void givenListContainsNulls_whenPurgedOfNulls_thenNoLongerContainsNulls() {
         final List<String> values = Lists.newArrayList("a", null, "b", "c");
         final Iterable<String> withoutNulls = Iterables.filter(values, Predicates.notNull());
+        
         System.out.println(withoutNulls);
     }
 
