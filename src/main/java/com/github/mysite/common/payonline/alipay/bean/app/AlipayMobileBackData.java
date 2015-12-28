@@ -5,9 +5,9 @@ import com.google.common.base.MoreObjects;
 /**
  * description:支付宝SDK移动支付，服务器异步通知参数
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/12 - 17:48
+ * @author :    jy.chen
+ * @version :  1.0
+ * @since : 2015-11-30 17:48
  */
 public class AlipayMobileBackData {
 

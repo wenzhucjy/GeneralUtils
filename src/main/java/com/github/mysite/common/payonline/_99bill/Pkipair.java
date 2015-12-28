@@ -4,7 +4,6 @@ import org.apache.commons.io.IOUtils;
 import org.bouncycastle.util.encoders.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.Assert;
 
 import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
@@ -21,9 +20,9 @@ import java.security.cert.X509Certificate;
  * <p>快钱PKI加密，即DSA 或者 RSA签名方式</p>
  * <p>商户提交用商户私钥证书加密，快钱通过商户的公钥证书来解密；快钱返回时是通过快钱私钥证书加密，商户用快钱公钥证书解密来验签</p>
  *
- * @author jy.chen
- * @version 1.0
- * @since 2015-8-12  17:31
+ * @author : jy.chen
+ * @version : 1.0
+ * @since : 2015-11-30 17:31
  */
 public class Pkipair {
     /**
@@ -33,17 +32,16 @@ public class Pkipair {
     /**
      * 密码：xxx,详见生成商户私钥证书的指令
      */
-    public static final String KEY_PWD = "1234";
+    public static final String KEY_PWD = "";
 
     /**
      * 使用商户生成的商户私钥(99bill-rsa.pfx)进行加密
      *
-     * @param signMsg
-     * @return
+     * @param signMsg   待签名数据
+     * @return  签名结果
      */
     public static String signMsg(String signMsg) {
 
-        Assert.notNull(signMsg, "signMsg must not be null");
         //Base64 加密
         String base64 = "";
         InputStream ksfis = null;
@@ -94,8 +92,6 @@ public class Pkipair {
      */
     public static boolean enCodeByCer(String signMsgVal, String sign) {
 
-        Assert.notNull(signMsgVal, "signMsgVal must not be null");
-        Assert.notNull(sign, "sign must not be null");
         LOG.debug("99bill notity signMsgVal : [{}]", signMsgVal);
         boolean flag = false;
         InputStream inStream = null;

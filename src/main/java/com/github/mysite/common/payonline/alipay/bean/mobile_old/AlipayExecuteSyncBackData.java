@@ -1,4 +1,4 @@
-package com.github.mysite.common.payonline.alipay.bean.mobile;
+package com.github.mysite.common.payonline.alipay.bean.mobile_old;
 
 import com.google.common.base.MoreObjects;
 
@@ -12,9 +12,9 @@ import com.google.common.base.MoreObjects;
  *
  * <p>页面跳转后，浏览器地址栏中的链接仅在一分钟内有效，超过一分钟该链接地址会失效</p>
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/12 - 17:28
+ * @author : jy.chen
+ * @version : 1.0
+ * @since : 2015-11-30 17:28
  */
 public class AlipayExecuteSyncBackData {
     /*   基本参数   start  */

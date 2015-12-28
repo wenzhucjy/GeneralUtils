@@ -14,12 +14,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+
 /**
- * description:
+ * description: 支付宝支付核心文件
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/14 - 11:53
+ * @author : jy.chen
+ * @version : 1.0
+ * @since : 2015-11-30 11:53
  */
 public class AlipayCore {
 
@@ -39,7 +41,8 @@ public class AlipayCore {
 
         for (String key : sArray.keySet()) {
             String value = sArray.get(key);
-            if (value == null || value.equals("") || key.equalsIgnoreCase("sign") || key.equalsIgnoreCase("sign_type")) {
+            if (value == null || value.equals("") || key.equalsIgnoreCase("sign")
+                    || key.equalsIgnoreCase("sign_type")) {
                 continue;
             }
             result.put(key, value);
@@ -65,7 +68,7 @@ public class AlipayCore {
             String key = keys.get(i);
             String value = params.get(key);
 
-            if (i == keys.size() - 1) {// 拼接时，不包括最后一个&字符
+            if (i == keys.size() - 1) {//拼接时，不包括最后一个&字符
                 prestr = prestr + key + "=" + value;
             } else {
                 prestr = prestr + key + "=" + value + "&";
@@ -79,34 +82,12 @@ public class AlipayCore {
      * 写日志，方便测试（看网站需求，也可以改成把记录存入数据库）
      *
      * @param sWord 要写入日志里的文本内容
+     * @param type 日志标志位
      */
-    public static void logResult(String sWord, String name) {
+    public static void logResult(String sWord, String type) {
         FileWriter writer = null;
         try {
-            writer = new FileWriter(AlipayConfig.log_path + name + System.currentTimeMillis() + ".txt");
-            writer.write(sWord);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    /**
-     * 写日志，方便测试（看网站需求，也可以改成把记录存入数据库）
-     *
-     * @param sWord 要写入日志里的文本内容
-     */
-    public static void logNotifyResult(String sWord) {
-        FileWriter writer = null;
-        try {
-            writer = new FileWriter(AlipayConfig.log_path + "alipay_log_Notify_" + System.currentTimeMillis() + ".txt");
+            writer = new FileWriter(AlipayConfig.log_path + "alipay_log_" + type + "_" + System.currentTimeMillis() + ".txt");
             writer.write(sWord);
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,29 +111,13 @@ public class AlipayCore {
      */
     public static String getAbstract(String strFilePath, String file_digest_type) throws IOException {
         PartSource file = new FilePartSource(new File(strFilePath));
-        if (file_digest_type.equals("MD5")) {
-            return DigestUtils.md5Hex(file.createInputStream());
-        } else if (file_digest_type.equals("SHA")) {
-            return DigestUtils.sha256Hex(file.createInputStream());
-        } else {
-            return "";
+        switch (file_digest_type) {
+            case "MD5":
+                return DigestUtils.md5Hex(file.createInputStream());
+            case "SHA":
+                return DigestUtils.sha256Hex(file.createInputStream());
+            default:
+                return "";
         }
     }
-
-    /**
-     * 把数组所有元素按照固定参数排序，以“参数=参数值”的模式用“&”字符拼接成字符串
-     *
-     * @param params 需要参与字符拼接的参数组
-     * @return 拼接后字符串
-     */
-    public static String createLinkStringNoSort(Map<String, String> params) {
-
-        // 手机网站支付MD5签名固定参数排序，顺序参照文档说明
-        StringBuilder gotoSign_params = new StringBuilder();
-        gotoSign_params.append("service=" + params.get("service")).append("&v=" + params.get("v")).append("&sec_id=" + params.get("sec_id"))
-                .append("&notify_data=" + params.get("notify_data"));
-
-        return gotoSign_params.toString();
-    }
-
 }

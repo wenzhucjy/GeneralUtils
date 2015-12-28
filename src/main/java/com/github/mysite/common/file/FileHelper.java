@@ -5,9 +5,9 @@ import java.io.*;
 /**
  * description:文件辅助类
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/11 - 10:38
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/11 - 10:38
  */
 public class FileHelper {
 

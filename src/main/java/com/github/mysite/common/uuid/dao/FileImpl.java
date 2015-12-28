@@ -9,9 +9,9 @@ import java.util.Map;
 /**
  * description: 文件实现存储订单序列号
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/11 - 10:50
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/11 - 10:50
  */
 public class FileImpl implements SnCodeDao {
 

@@ -16,11 +16,11 @@ import java.security.spec.X509EncodedKeySpec;
 /**
  * description:RSA —— 加解密工具类
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/14 - 14:48
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/14 - 14:48
  */
-public class RSA {
+public class RSAHelper {
     public static final String SIGN_ALGORITHMS = "SHA1WithRSA";
 
     /**
@@ -114,9 +114,7 @@ public class RSA {
                 block = buf;
             } else {
                 block = new byte[bufl];
-                for (int i = 0; i < bufl; i++) {
-                    block[i] = buf[i];
-                }
+                System.arraycopy(buf, 0, block, 0, bufl);
             }
 
             writer.write(cipher.doFinal(block));
@@ -142,8 +140,6 @@ public class RSA {
 
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 
-        PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
-
-        return privateKey;
+        return keyFactory.generatePrivate(keySpec);
     }
 }

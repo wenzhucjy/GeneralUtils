@@ -1,14 +1,15 @@
 package com.github.mysite.common.payonline._99bill;
 
-import com.google.common.base.MoreObjects;
 import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.base.MoreObjects;
 
 /**
  * description:快钱支付返回的封装数据
  *
  * @author  jy.chen
  * @version  1.0
- * @since  2015-8-12 - 17:29
+ * @since 2015-11-30 - 17:29
  */
 public class _99BillBackData {
 

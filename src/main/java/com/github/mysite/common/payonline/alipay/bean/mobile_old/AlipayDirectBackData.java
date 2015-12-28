@@ -1,13 +1,13 @@
-package com.github.mysite.common.payonline.alipay.bean.mobile;
+package com.github.mysite.common.payonline.alipay.bean.mobile_old;
 
 import com.google.common.base.MoreObjects;
 
 /**
  * description:手机网页即时到账授权接口html同步返回参数
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/12 - 17:26
+ * @author : jy.chen
+ * @version : 1.0
+ * @since : 2015-11-30 17:26
  */
 public class AlipayDirectBackData {
 

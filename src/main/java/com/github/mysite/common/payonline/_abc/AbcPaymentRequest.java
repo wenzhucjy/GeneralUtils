@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * description:中国农业银行支付对象 —— 新电子商务接口V3.0.2
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/25 - 15:00
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/25 - 15:00
  */
 public class AbcPaymentRequest extends PaymentRequest {
     

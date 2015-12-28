@@ -7,9 +7,9 @@ import java.util.Map;
 /**
  * description:订单序列号接口
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/11 - 10:44
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/11 - 10:44
  */
 public interface SnCodeDao {
 

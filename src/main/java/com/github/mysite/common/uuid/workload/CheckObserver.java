@@ -9,9 +9,9 @@ import java.util.Observer;
 /**
  * description:检测序列号
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/11 - 22:15
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/11 - 22:15
  */
 public class CheckObserver implements Observer {
     @Override

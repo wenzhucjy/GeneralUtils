@@ -7,9 +7,9 @@ import com.github.mysite.common.uuid.dao.SnCodeDao;
 /**
  * description:默认的运算实现
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/11 - 10:58
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/11 - 10:58
  */
 public class DefaultArithmatic implements IArithmatic {
     private SnCodeDao dao = SnCodeFactory.generateSnCodeDao();

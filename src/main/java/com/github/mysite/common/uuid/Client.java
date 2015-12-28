@@ -3,9 +3,9 @@ package com.github.mysite.common.uuid;
 /**
  * description:客户端测试类
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/11 - 22:20
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/11 - 22:20
  */
 public class Client {
     public static void main(String[] args) {

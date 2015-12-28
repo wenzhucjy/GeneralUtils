@@ -8,9 +8,9 @@ import java.util.Observable;
 /**
  * description:
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/11 - 22:09
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/11 - 22:09
  */
 public class WorkLoadService extends Observable implements IWorkLoad{
 

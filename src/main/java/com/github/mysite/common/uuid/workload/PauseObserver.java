@@ -7,9 +7,9 @@ import java.util.Observer;
 /**
  * description:暂停业务监控
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/11 - 22:18
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/11 - 22:18
  */
 public class PauseObserver implements Observer {
     @Override

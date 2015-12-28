@@ -1,5 +1,6 @@
-package com.github.mysite.common.payonline.alipay.httpclient;
+package com.github.mysite.common.payonline.alipay.util.httpclient;
 
+import com.google.common.io.CharStreams;
 import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -13,8 +14,10 @@ import org.apache.commons.httpclient.util.IdleConnectionTimeoutThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +26,14 @@ import java.util.List;
  *
  * @author : jy.chen
  * @version : 1.0
- * @since : 2015/8/14 - 11:00
+ * @since : 2015-11-30 11:00
  */
-public class HttpProtocolHandler {
+public class AliPayHttpProtocolHandler {
     /**
      * Logger for HttpProtocolHandler
      */
-    private static final Logger LOG = LoggerFactory.getLogger(HttpProtocolHandler.class);
-    
+    private static final Logger LOG = LoggerFactory.getLogger(AliPayHttpProtocolHandler.class);
+
     private static String DEFAULT_CHARSET = "GBK";
 
     /**
@@ -62,21 +65,21 @@ public class HttpProtocolHandler {
      */
     private HttpConnectionManager connectionManager;
 
-    private static HttpProtocolHandler httpProtocolHandler = new HttpProtocolHandler();
+    private static AliPayHttpProtocolHandler aliPayHttpProtocolHandler = new AliPayHttpProtocolHandler();
 
     /**
      * 工厂方法
      *
-     * @return
+     * @return HttpProtocolHandler
      */
-    public static HttpProtocolHandler getInstance() {
-        return httpProtocolHandler;
+    public static AliPayHttpProtocolHandler getInstance() {
+        return aliPayHttpProtocolHandler;
     }
 
     /**
      * 私有的构造方法
      */
-    private HttpProtocolHandler() {
+    private AliPayHttpProtocolHandler() {
         // 创建一个线程安全的HTTP连接池
         connectionManager = new MultiThreadedHttpConnectionManager();
         connectionManager.getParams().setDefaultMaxConnectionsPerHost(defaultMaxConnPerHost);
@@ -95,10 +98,10 @@ public class HttpProtocolHandler {
      * @param request         请求数据
      * @param strParaFileName 文件类型的参数名
      * @param strFilePath     文件路径
-     * @return
-     * @throws HttpException, IOException
+     * @return AlipayHttpResponse
+     * @throws IOException
      */
-    public AlipayHttpResponse execute(AlipayHttpRequest request, String strParaFileName, String strFilePath) throws HttpException, IOException {
+    public AliPayHttpResponse execute(AliPayHttpRequest request, String strParaFileName, String strFilePath) throws IOException {
         HttpClient httpclient = new HttpClient(connectionManager);
 
         // 设置连接超时
@@ -120,10 +123,10 @@ public class HttpProtocolHandler {
 
         String charset = request.getCharset();
         charset = charset == null ? DEFAULT_CHARSET : charset;
-        HttpMethod method = null;
+        HttpMethod method;
 
         //get模式且不带上传文件
-        if (request.getMethod().equals(AlipayHttpRequest.METHOD_GET)) {
+        if (request.getMethod().equals(AliPayHttpRequest.METHOD_GET)) {
             method = new GetMethod(request.getUrl());
             method.getParams().setCredentialCharset(charset);
 
@@ -150,14 +153,34 @@ public class HttpProtocolHandler {
 
         // 设置Http Header中的User-Agent属性
         method.addRequestHeader("User-Agent", "Mozilla/4.0");
-        AlipayHttpResponse response = new AlipayHttpResponse();
+        AliPayHttpResponse response = new AliPayHttpResponse();
 
         try {
-            httpclient.executeMethod(method);
-            if (request.getResultType().equals(HttpResultType.STRING)) {
-                response.setStringResult(method.getResponseBodyAsString());
-            } else if (request.getResultType().equals(HttpResultType.BYTES)) {
-                response.setByteResult(method.getResponseBody());
+
+            //	设置成了默认的恢复策略，在发生异常时候将自动重试3次，在这里你也可以设置成自定义的恢复策略
+            method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler()); //执行getMethod
+            int statusCode = httpclient.executeMethod(method);
+            if (statusCode != HttpStatus.SC_OK) {
+                LOG.error("Method failed: " + method.getStatusLine());
+            }
+            // Going to buffer response body of large or unknown size. Using getResponseBodyAsStream instead is recommended.
+            BufferedReader reader = new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream()));
+            //use guava lib
+            String stringResult = CharStreams.toString(reader);
+
+           // httpclient.executeMethod(method);
+            if (request.getResultType().equals(AliPayHttpResultType.STRING)) {
+               response.setStringResult(stringResult);
+                //StringBuilder stringBuilder = new StringBuilder();
+                //String str;
+                //while ((str = reader.readLine()) != null) {
+                //    stringBuilder.append(str);
+                //}
+                //response.setStringResult(stringBuilder.toString());
+                //response.setStringResult(method.getResponseBodyAsString());
+            } else if (request.getResultType().equals(AliPayHttpResultType.BYTES)) {
+                response.setByteResult(stringResult.getBytes());
+               // response.setByteResult(method.getResponseBody());
             }
             response.setResponseHeaders(method.getResponseHeaders());
         } catch (Exception ex) {
@@ -180,15 +203,15 @@ public class HttpProtocolHandler {
             return "null";
         }
 
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         for (int i = 0; i < nameValues.length; i++) {
             NameValuePair nameValue = nameValues[i];
 
             if (i == 0) {
-                buffer.append(nameValue.getName() + "=" + nameValue.getValue());
+                buffer.append(nameValue.getName()).append("=").append(nameValue.getValue());
             } else {
-                buffer.append("&" + nameValue.getName() + "=" + nameValue.getValue());
+                buffer.append("&").append(nameValue.getName()).append("=").append(nameValue.getValue());
             }
         }
 

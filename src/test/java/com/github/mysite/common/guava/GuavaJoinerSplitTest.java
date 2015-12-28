@@ -104,7 +104,11 @@ public class GuavaJoinerSplitTest {
 	    Map<String, String> result = Splitter.on(",")
 	                                         .withKeyValueSeparator("=")
 	                                         .split(input);
-	 
+
+		//Map<String, String> map = Splitter.on("@")
+		// 									.withKeyValueSeparator(":")
+		// 									.split(count);//{"1":"2", "3":"4"}
+
 	    assertEquals("first", result.get("John"));
 	    assertEquals("second", result.get("Adam"));
 	}

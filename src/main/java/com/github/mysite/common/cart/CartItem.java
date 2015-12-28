@@ -8,9 +8,9 @@ import java.math.BigDecimal;
 /**
  * description:购物项
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/13 - 15:22
+ * @author :    jy.chen
+ * @version  :  1.0
+ * @since  : 2015/8/13 - 15:22
  */
 public class CartItem {
     

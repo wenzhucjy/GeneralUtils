@@ -3,7 +3,7 @@ package com.github.mysite.common.payonline._abc;
 import com.abc.trustpay.client.Constants;
 import com.abc.trustpay.client.TrxException;
 import com.github.mysite.common.jodatime.DateHelper;
-import com.github.mysite.common.encrypt.MD5Encrypt;
+import com.github.mysite.common.encrypt.MD5Helper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,7 +92,7 @@ public abstract class AbcBaseAction {
                 if (xmlResultGBK.isSuccess()) {
                     // 5、支付成功并且验签、解析成功
                     // 以下是商户业务逻辑代码
-                    pcKey = MD5Encrypt.sign(tResult.getOrderNo(), rsaPrivateKey, inputCharSet);
+                    pcKey = MD5Helper.sign(tResult.getOrderNo(), rsaPrivateKey, inputCharSet);
                     bussinessDealCode(tResult);
                 } else {
                     // 6、支付成功但是由于验签或者解析报文等操作失败
@@ -129,7 +129,7 @@ public abstract class AbcBaseAction {
 
         if (StringUtils.isNotBlank(request.getParameter("orderNo")) && StringUtils.isNotBlank(request.getParameter("pcKey"))) {
             // url 验签
-            boolean isSign = MD5Encrypt.verify(request.getParameter("orderNo"), request.getParameter("pcKey"), rsaPrivateKey, inputCharSet);
+            boolean isSign = MD5Helper.verify(request.getParameter("orderNo"), request.getParameter("pcKey"), rsaPrivateKey, inputCharSet);
             LOG.debug("ABC payment success,isSign:[{}]", isSign);
             if (isSign) {
                 return this.paymentSuccess(request);
@@ -147,7 +147,7 @@ public abstract class AbcBaseAction {
     protected String paymentFailPage(HttpServletRequest request) {
         if (StringUtils.isNotBlank(request.getParameter("orderNo")) && StringUtils.isNotBlank(request.getParameter("pcKey"))) {
             // url 验签
-            boolean isSign = MD5Encrypt.verify(request.getParameter("orderNo"), request.getParameter("pcKey"), rsaPrivateKey, inputCharSet);
+            boolean isSign = MD5Helper.verify(request.getParameter("orderNo"), request.getParameter("pcKey"), rsaPrivateKey, inputCharSet);
             LOG.debug("ABC payment fail,isSign:[{}]", isSign);
             if (isSign) {
                 return this.paymentFail(request);

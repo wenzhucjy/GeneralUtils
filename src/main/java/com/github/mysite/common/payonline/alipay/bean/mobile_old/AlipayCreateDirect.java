@@ -1,4 +1,4 @@
-package com.github.mysite.common.payonline.alipay.bean.mobile;
+package com.github.mysite.common.payonline.alipay.bean.mobile_old;
 
 import com.github.mysite.common.payonline.alipay.AlipayConfig;
 import com.google.common.base.MoreObjects;
@@ -9,21 +9,21 @@ import java.util.Map;
 /**
  * description:手机网页即时到账授权接口
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/12 - 17:25
+ * @author : jy.chen
+ * @version : 1.0
+ * @since : 2015-11-30 17:25
  */
 public class AlipayCreateDirect {
 
     /* 基本参数 start */
     public static final String directGateWay = "http://wappaygw.alipay.com/service/rest.htm"; // 支付宝手机网页即时到账授权接口网关
-    private String service = "alipay.wap.trade.create.direct";             // 接口名称
+    private String service = "alipay.wap.trade.create.direct";  		// 接口名称
     private String format = "xml";                                         // 请求参数格式
     private String v = "2.0";                                              // 接口版本号
     private String partner = AlipayConfig.partner;                         // 合作者身份 ID
     private String input_charset = AlipayConfig.input_charset;             // 字符集
     private String req_id;                                                 // 请求号，须保证每次请求都是唯一,最长32位
-    private String sec_id = "MD5";                                         // 签名方式 MD5 or RSA,若设置RSA则用0001代替
+    private String sec_id = "0001";                                         // 签名方式 MD5 or RSA,若设置RSA则用0001代替
     private String sign;                                                   // 对请求或响应中参数签名后的值
     /* 基本参数 end */
 
@@ -33,7 +33,7 @@ public class AlipayCreateDirect {
     private String out_trade_no;                                            // 支付宝合作商户网站唯一订单号
     private String total_fee;                                               // 该笔订单的资金总额， 单位为 RMB-Yuan。
     // 取值范围为[0.01，100,000,000.00]，精确到小数点后两位。
-    private String seller_account_name = AlipayConfig.WIDseller_email;      // 卖家支付宝账号
+    private String seller_account_name = AlipayConfig.sellerEmail;      // 卖家支付宝账号
     private String call_back_url;                                           // 支付成功的跳转页面
     // 以下参数可为空
     private String notify_url;                                              // 服务器异步通知的页面路径,页面返回success代表成功
@@ -52,7 +52,7 @@ public class AlipayCreateDirect {
      * @param req_id        唯一标志位
      * @param notify_url    服务器异步通知地址
      * @param call_back_url 页面通知地址
-     * @param merchant_url  交易终端地址
+     * @param merchant_url  交易中断地址
      */
     public AlipayCreateDirect(String out_trade_no, String total_fee, String subject, String pay_expire, String req_id, String notify_url, String
             call_back_url, String merchant_url) {

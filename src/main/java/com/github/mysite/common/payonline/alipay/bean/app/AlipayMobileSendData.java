@@ -1,23 +1,24 @@
 package com.github.mysite.common.payonline.alipay.bean.app;
 
-import com.github.mysite.common.encrypt.RSA;
+import org.apache.commons.lang3.StringUtils;
+
+import com.github.mysite.common.encrypt.RSAHelper;
 import com.github.mysite.common.payonline.alipay.AlipayConfig;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * description:支付宝SDK移动支付请求的参数
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/12 - 17:48
+ * @author :    jy.chen
+ * @version :  1.0
+ * @since : 2015-11-30 17:48
  */
 public class AlipayMobileSendData {
 
 
     private String partner = AlipayConfig.partner;
-    private String seller_id = AlipayConfig.WIDseller_email;
+    private String seller_id = AlipayConfig.sellerEmail;
     private String out_trade_no;
     private String total_fee;
     private String subject;
@@ -43,34 +44,35 @@ public class AlipayMobileSendData {
     /**
      * 需要参与签名的参数
      *
-     * @return  组装好的需要固定格式签名的参数
+     * @return 组装好的需要固定格式签名的参数
      */
     public String buildRequestParam() {
-        String strParam =
-                StringUtils.join(
-                        "partner=\"", this.partner,
-                        "\"&seller_id=\"", this.seller_id,
-                        "\"&out_trade_no=\"", Strings.nullToEmpty(this.out_trade_no),
-                        "\"&subject=\"", Strings.nullToEmpty(this.subject),
-                        "\"&body=\"", Strings.nullToEmpty(this.body),
-                        "\"&total_fee=\"", Strings.nullToEmpty(this.total_fee),
-                        "\"&notify_url=\"", Strings.nullToEmpty(this.notify_url),
-                        "\"&service=\"", this.service,
-                        "\"&payment_type=\"", this.payment_type,
-                        "\"&_input_charset=\"", this._input_charset,
-                        "\"&it_b_pay=\"", Strings.nullToEmpty(it_b_pay)
-                        , "\""
-                );
+        String strParam;
+        strParam = StringUtils.join(
+                "partner=\"", this.partner,
+                "\"&seller_id=\"", this.seller_id,
+                "\"&out_trade_no=\"", Strings.nullToEmpty(this.out_trade_no),
+                "\"&subject=\"", Strings.nullToEmpty(this.subject),
+                "\"&body=\"", Strings.nullToEmpty(this.body),
+                "\"&total_fee=\"", Strings.nullToEmpty(this.total_fee),
+                "\"&notify_url=\"", Strings.nullToEmpty(this.notify_url),
+                "\"&service=\"", this.service,
+                "\"&payment_type=\"", this.payment_type,
+                "\"&_input_charset=\"", this._input_charset,
+                "\"&it_b_pay=\"", Strings.nullToEmpty(it_b_pay)
+                , "\""
+        );
 
         return strParam;
     }
 
     /**
      * 生成签名的数据，并拼接出URL
-     * @return  签名结果
+     *
+     * @return 签名结果
      */
     public String generateSign() {
-        this.sign = RSA.sign(buildRequestParam(), AlipayConfig.private_key, this._input_charset, true);
+        this.sign = RSAHelper.sign(buildRequestParam(), AlipayConfig.private_key, this._input_charset, true);
         return String.format("%s&sign=\"%s\"&sign_type=\"%s\"", buildRequestParam(), this.sign, this.sign_type);
     }
 

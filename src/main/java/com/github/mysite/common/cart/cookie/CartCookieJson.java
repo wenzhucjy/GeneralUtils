@@ -18,9 +18,9 @@ import static com.google.common.collect.Lists.newArrayList;
 /**
  * description:操作cookie与购物项的转换
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/13 - 15:47
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/13 - 15:47
  */
 public class CartCookieJson {
 

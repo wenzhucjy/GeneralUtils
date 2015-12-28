@@ -6,9 +6,9 @@ import java.util.Optional;
  * description: java8-tutorial stream sample 
  * @seealso https://github.com/winterbe/java8-tutorial
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/28 - 14:16
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/28 - 14:16
  */
 public class OptionalSample {
     public static void main(String[] args) {

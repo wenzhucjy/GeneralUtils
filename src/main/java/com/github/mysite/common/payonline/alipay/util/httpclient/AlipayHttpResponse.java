@@ -1,18 +1,19 @@
-package com.github.mysite.common.payonline.alipay.httpclient;
+package com.github.mysite.common.payonline.alipay.util.httpclient;
 
 import com.github.mysite.common.payonline.alipay.AlipayConfig;
 import org.apache.commons.httpclient.Header;
 
 import java.io.UnsupportedEncodingException;
 
+
 /**
  * description:封装Http返回对象信息
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/14 - 11:00
+ * @author : jy.chen
+ * @version : 1.0
+ * @since : 2015-11-30 11:00
  */
-public class AlipayHttpResponse {
+public class AliPayHttpResponse {
 
 
     /**

@@ -5,9 +5,9 @@ import com.google.common.base.MoreObjects;
 /**
  * description:中国农业银行支付返回结果 —— 新电子商务接口V3.0.2
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/26 - 17:35
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/26 - 17:35
  */
 public class AbcPaymentResult {
 

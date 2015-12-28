@@ -1,14 +1,13 @@
 package com.github.mysite.common.encrypt;
  
-import java.io.UnsupportedEncodingException;
-import java.security.Key;
-import java.security.Security;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import java.io.UnsupportedEncodingException;
+import java.security.Key;
+import java.security.Security;
 /**
  * 名称: AES256EncryptHelper.java<br>
  * 描述: 关于AES256算法java端加密，ios端解密出现无法解密问题的解决方案<br>
@@ -118,31 +117,23 @@ public class AES256EncryptHelper{
          */ 
         public static void main(String[] args) throws Exception{  
              
-        	//String str="Anyfish";  
-        	String str = "partner=\"2088411402162182\"&seller_id=\"fish@anyfish.cn\"&out_trade_no=\"T20150526B0000000190\"&subject=\"IOS订单\"&body=\"百鱼订单\"&total_fee=\"0.01\"&notify_url=\"http://reg.anyfish.cn:12121/portal/payment/mobile/alipay/ASyncNotify\"&service=\"mobile.securitypay.pay\"&payment_type=\"1\"&_input_charset=\"UTF-8\"&it_b_pay=\"10d\"&sign=\"vOrsR9BzJ54QtMuTTB1nWmMdkIqOanmjJi%2BPbIulMK4nbFMsXKecQrZvQlMOFQ8o6XwPoevxXMIumGHIYN2DSnVJnyamE9gHJCv9rcGMDpylAiQ8ScAtbsY3vBvTjodQwKM3TaLUd8GCorM%2FkTTGrD3fj5026LiiP6iJ%2BZk5zsk%3D\"&sign_type=\"RSA\"";
-            System.out.println("原文："+str);  
+        	String str="test";
+            System.out.println("原文："+str);
  
             //初始化密钥  
             byte[] key;
             try {
-            	long member =83316867984338435l;
             	byte[] newKey = new byte[32];
             	key = AES256EncryptHelper.initkey();
             	System.arraycopy(key, 0,newKey, 0, key.length);
             	
                 System.out.print("密钥：");  
-//                for(int i = 0;i<key.length;i++){
-//                    System.out.printf("%x", key[i]);
-//                }
                 String s = BytesParser.toHexString(newKey);
                 System.out.println(s);
                 System.out.print("\n");
                 //加密数据  
                 byte[] data=AES256EncryptHelper.encrypt(str.getBytes(), newKey);  
                 System.out.print("加密后："); 
-//                for(int i = 0;i<data.length;i++){
-//                    System.out.printf("%x", data[i]);
-//                }
                 System.out.println(BytesParser.toHexString(data));
                 System.out.print("\n");
                  

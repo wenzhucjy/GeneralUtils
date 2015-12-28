@@ -1,4 +1,4 @@
-package com.github.mysite.common.payonline.alipay.bean.mobile;
+package com.github.mysite.common.payonline.alipay.bean.mobile_old;
 
 import com.github.mysite.common.payonline.alipay.AlipayConfig;
 import com.google.common.base.MoreObjects;
@@ -7,11 +7,11 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
- * description:
+ * description: 授权接口
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/12 - 17:26
+ * @author : jy.chen
+ * @version : 1.0
+ * @since : 2015-11-30 17:26
  */
 public class AlipayAuthAndExecute {
 
@@ -21,15 +21,15 @@ public class AlipayAuthAndExecute {
     private String v = "2.0";                                         //接口版本号
     private String partner = AlipayConfig.partner;                    //合作者身份 ID
     private String input_charset = AlipayConfig.input_charset;        // 字符集
-    private String sec_id = "MD5";                                    //签名方式  MD5 or RSA,若设置RSA则用0001代替
-    private String sign;                                            //对请求或响应中参数签名后的值
+    private String sec_id = "0001";                                    //签名方式  MD5 or RSA,若设置RSA则用0001代替
+    private String sign;                                              //对请求或响应中参数签名后的值
 	/*   基本参数   end  */
 
     /*   业务参数   start  */
     private String req_data;                                        //请求业务参数
     /*   业务参数   end    */
 	/*   req_data 请求业务参数 start */
-    private String request_token;                                    //授权令牌,授权令牌，调用“手机网页即时到账授权接口(alipay.wap.trade.create.direct)”成功后返回该值。此参数值不能更改
+    private String request_token;                                    //授权令牌,授权令牌，调用“手机网页即时到账授权接口(payonline.wap.trade.create.direct)”成功后返回该值。此参数值不能更改
 
 
     /*   req_data 请求业务参数 end   */
@@ -44,7 +44,7 @@ public class AlipayAuthAndExecute {
     /**
      * 交易接口 - 业务参数
      *
-     * @return
+     * @return String
      */
     public String getReq_data() {
         this.req_data = "<auth_and_execute_req><request_token>" + request_token + "</request_token></auth_and_execute_req>";

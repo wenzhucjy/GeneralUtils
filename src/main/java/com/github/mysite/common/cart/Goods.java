@@ -7,9 +7,9 @@ import java.math.BigDecimal;
 /**
  * description:商品用例
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/12 - 17:53
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/12 - 17:53
  */
 public class Goods {
 

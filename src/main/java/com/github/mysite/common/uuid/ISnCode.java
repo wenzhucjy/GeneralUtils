@@ -5,9 +5,9 @@ import com.github.mysite.common.uuid.arithmatic.IArithmatic;
 /**
  * description:根据规则生成最终的订单号
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/11 - 10:57
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/11 - 10:57
  */
 public interface ISnCode {
     /**

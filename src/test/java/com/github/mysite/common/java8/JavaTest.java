@@ -10,8 +10,8 @@ import java.util.Optional;
 /**
  * description: JDK8测试
  *
- * @author : jy.chen
- * @version : 1.0
+ *  @author :   jy.chen
+ * @version  : 1.0
  * @since : 2015-09-21 10:24
  */
 public class JavaTest {

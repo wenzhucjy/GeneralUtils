@@ -8,9 +8,9 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * description:
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/11 - 11:10
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/11 - 11:10
  */
 public class SnCodeService implements ISnCode {
     /**

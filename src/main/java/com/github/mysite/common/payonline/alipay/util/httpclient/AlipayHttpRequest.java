@@ -1,15 +1,15 @@
-package com.github.mysite.common.payonline.alipay.httpclient;
+package com.github.mysite.common.payonline.alipay.util.httpclient;
 
 import org.apache.commons.httpclient.NameValuePair;
 
 /**
  * description:Http请求对象的封装
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/14 - 11:00
+ * @author : jy.chen
+ * @version : 1.0
+ * @since : 2015-11-30 11:00
  */
-public class AlipayHttpRequest {
+public class AliPayHttpRequest {
 
 
     /**
@@ -59,9 +59,9 @@ public class AlipayHttpRequest {
     /**
      * 请求返回的方式
      */
-    private HttpResultType resultType = HttpResultType.BYTES;
+    private AliPayHttpResultType resultType = AliPayHttpResultType.BYTES;
 
-    public AlipayHttpRequest(HttpResultType resultType) {
+    public AliPayHttpRequest(AliPayHttpResultType resultType) {
         super();
         this.resultType = resultType;
     }
@@ -142,11 +142,11 @@ public class AlipayHttpRequest {
         this.charset = charset;
     }
 
-    public HttpResultType getResultType() {
+    public AliPayHttpResultType getResultType() {
         return resultType;
     }
 
-    public void setResultType(HttpResultType resultType) {
+    public void setResultType(AliPayHttpResultType resultType) {
         this.resultType = resultType;
     }
 }

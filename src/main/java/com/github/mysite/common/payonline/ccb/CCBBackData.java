@@ -6,9 +6,9 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * description:封装CCB交易的返回参数
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/12 - 17:46
+ * @author :    jy.chen
+ * @version  :  1.0
+ * @since  : 2015-12-03 17:46
  */
 public class CCBBackData {
 

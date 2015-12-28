@@ -1,6 +1,6 @@
 package com.github.mysite.common.payonline.ccb;
 
-import com.github.mysite.common.common.EncapsuleRequestParaUtil;
+import com.github.mysite.common.payonline.util.RequestHelper;
 import com.google.common.base.Strings;
 import org.apache.commons.lang3.StringUtils;
 
@@ -11,9 +11,9 @@ import java.util.Map;
 /**
  * description:封装CCB 支付请求参数 —— 使用的是防钓鱼接口，另外还有MD5接口，密钥接口
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/12 - 17:46
+ * @author :    jy.chen
+ * @version :  1.0
+ * @since  : 2015-12-03 17:46
  */
 public class CCBSendData {
     
@@ -90,7 +90,7 @@ public class CCBSendData {
         sParaTemp.put("MAC", "");
         sParaTemp.put("macSrc", macB2CUrl(payType, isCompare));
         // 重新组装 form 表单数据
-        return EncapsuleRequestParaUtil.buildRequestPara(sParaTemp, strMethod, CCB_GATE_WAY);
+        return RequestHelper.buildRequestPara(sParaTemp, strMethod, CCB_GATE_WAY);
     }
 
     /**

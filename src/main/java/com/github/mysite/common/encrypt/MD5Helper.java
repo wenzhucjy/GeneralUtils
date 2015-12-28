@@ -7,16 +7,16 @@ import org.slf4j.LoggerFactory;
 /**
  * description:MD5加密工具类  —— 签名处理核心文件
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/14 - 14:47
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/14 - 14:47
  */
-public class MD5Encrypt {
+public class MD5Helper {
 
     /**
      * Logger for this class
      */
-    private static final Logger LOG = LoggerFactory.getLogger(MD5Encrypt.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MD5Helper.class);
 
     /**
      * 签名字符串

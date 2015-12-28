@@ -1,4 +1,4 @@
-package com.github.mysite.common.payonline.alipay.bean.mobile;
+package com.github.mysite.common.payonline.alipay.bean.mobile_old;
 
 import com.google.common.base.MoreObjects;
 
@@ -7,9 +7,9 @@ import com.google.common.base.MoreObjects;
  * 即 notify_url 定义的同步跳转url带的参数
  * 如果商户反馈给支付宝的字符不是 success 这 7 个字符，支付宝服务器会不断重发通知，直到超过 24 小时 22 分钟
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/12 - 17:28
+ * @author : jy.chen
+ * @version : 1.0
+ * @since : 2015-11-30 17:28
  */
 public class AlipayExecuteAsyncBackData {
 

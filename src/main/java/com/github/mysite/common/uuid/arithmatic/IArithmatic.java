@@ -3,9 +3,9 @@ package com.github.mysite.common.uuid.arithmatic;
 /**
  * description:算法接口
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/11 - 10:58
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/11 - 10:58
  */
 public interface IArithmatic {
     /**

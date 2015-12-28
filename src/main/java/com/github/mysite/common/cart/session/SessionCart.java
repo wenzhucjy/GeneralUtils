@@ -10,9 +10,9 @@ import static com.google.common.collect.Maps.newLinkedHashMap;
 /**
  * description:session域购物车
  *
- * @author: jy.chen
- * @version: 1.0
- * @since: 2015/8/14 - 10:00
+ * @author :    jy.chen
+ *  @version  :  1.0
+ * @since  : 2015/8/14 - 10:00
  */
 public class SessionCart {
 
