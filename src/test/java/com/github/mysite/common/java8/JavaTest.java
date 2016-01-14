@@ -1,11 +1,13 @@
 package com.github.mysite.common.java8;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Ordering;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * description: JDK8测试
@@ -105,5 +107,13 @@ public class JavaTest {
                         .reduce((s1, s2) -> s1 + "#" + s2);
         reduced.ifPresent(System.out::println);
         // "aaa1#aaa2#bbb1#bbb2#bbb3#ccc#ddd1#ddd2"
+    }
+
+    @Test
+    public void jdk8SortTest() {
+        // Java 8 version
+        List<String> sortedJDK8Names = stringCollection.stream().sorted().collect(Collectors.toList());
+        // Guava version
+        List<String> sortedGuavaNames = Ordering.natural().sortedCopy(stringCollection);
     }
 }
