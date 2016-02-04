@@ -5,6 +5,8 @@ import com.google.common.collect.Ordering;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -115,5 +117,17 @@ public class JavaTest {
         List<String> sortedJDK8Names = stringCollection.stream().sorted().collect(Collectors.toList());
         // Guava version
         List<String> sortedGuavaNames = Ordering.natural().sortedCopy(stringCollection);
+    }
+
+    @Test
+    public void jdk8StatisticsTest() {
+        List<Integer> numbers = Arrays.asList(3, 2, 2, 3, 7, 3, 5);
+
+        IntSummaryStatistics stats = numbers.stream().mapToInt((x) -> x).summaryStatistics();
+
+        System.out.println("Highest number in List : " + stats.getMax());
+        System.out.println("Lowest  number in List : " + stats.getMin());
+        System.out.println("Sum of all numbers : " + stats.getSum());
+        System.out.println("Average of all  numbers : " + stats.getAverage());
     }
 }
