@@ -1,11 +1,10 @@
 package com.github.mysite.common.payonline.alipay.bean.app;
 
-import org.apache.commons.lang3.StringUtils;
-
-import com.github.mysite.common.encrypt.RSAHelper;
+import com.github.mysite.common.encrypt.AliPayRSAHelper;
 import com.github.mysite.common.payonline.alipay.AlipayConfig;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * description:支付宝SDK移动支付请求的参数
@@ -72,7 +71,7 @@ public class AlipayMobileSendData {
      * @return 签名结果
      */
     public String generateSign() {
-        this.sign = RSAHelper.sign(buildRequestParam(), AlipayConfig.private_key, this._input_charset, true);
+        this.sign = AliPayRSAHelper.sign(buildRequestParam(), this._input_charset, true);
         return String.format("%s&sign=\"%s\"&sign_type=\"%s\"", buildRequestParam(), this.sign, this.sign_type);
     }
 

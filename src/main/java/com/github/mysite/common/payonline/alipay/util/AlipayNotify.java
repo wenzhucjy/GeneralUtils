@@ -1,6 +1,6 @@
 package com.github.mysite.common.payonline.alipay.util;
 
-import com.github.mysite.common.encrypt.RSAHelper;
+import com.github.mysite.common.encrypt.AliPayRSAHelper;
 import com.github.mysite.common.payonline.alipay.AlipayConfig;
 import com.google.common.io.CharStreams;
 import org.slf4j.Logger;
@@ -78,7 +78,7 @@ public class AlipayNotify {
         boolean isSign = false;
         if (AlipayConfig.sign_type.equals("RSA")) {
             LOG.info("AliPayNotify getSignVerify preSignStr : {} , sign : {}", preSignStr, sign);
-            isSign = RSAHelper.verify(preSignStr, sign, AlipayConfig.ali_public_key, AlipayConfig.input_charset);
+            isSign = AliPayRSAHelper.verify(preSignStr, sign, AlipayConfig.ali_public_key, AlipayConfig.input_charset);
         }
         return isSign;
     }

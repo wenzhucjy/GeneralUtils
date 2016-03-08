@@ -1,7 +1,7 @@
 package com.github.mysite.common.payonline.alipay.util;
 
 import com.github.mysite.common.encrypt.MD5Helper;
-import com.github.mysite.common.encrypt.RSAHelper;
+import com.github.mysite.common.encrypt.AliPayRSAHelper;
 import com.github.mysite.common.payonline.alipay.AlipayConfig;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -168,7 +168,7 @@ public class AlipayNotify_O {
         //获得签名验证结果
         boolean isSign;
         //因移动支付只存在RSA签名，固无需判断
-        isSign = RSAHelper.verify(preSignStr, sign, AlipayConfig.ali_public_key, AlipayConfig.input_charset);
+        isSign = AliPayRSAHelper.verify(preSignStr, sign, AlipayConfig.ali_public_key, AlipayConfig.input_charset);
 
         return isSign;
     }
@@ -205,7 +205,7 @@ public class AlipayNotify_O {
      * @return 解密后结果
      */
     public static Map<String, String> decrypt(Map<String, String> inputPara) throws Exception {
-        inputPara.put("notify_data", RSAHelper.decrypt(inputPara.get("notify_data"), AlipayConfig.private_key, AlipayConfig.input_charset));
+        inputPara.put("notify_data", AliPayRSAHelper.decrypt(inputPara.get("notify_data"), AlipayConfig.private_key, AlipayConfig.input_charset));
         return inputPara;
     }
 
@@ -234,7 +234,7 @@ public class AlipayNotify_O {
             isSign = MD5Helper.verify(preSignStr, sign, AlipayConfig.key, AlipayConfig.input_charset);
         }
         if (AlipayConfig.sign_type.equals("0001")) {
-            isSign = RSAHelper.verify(preSignStr, sign, AlipayConfig.ali_public_key, AlipayConfig.input_charset);
+            isSign = AliPayRSAHelper.verify(preSignStr, sign, AlipayConfig.ali_public_key, AlipayConfig.input_charset);
         }
         return isSign;
     }

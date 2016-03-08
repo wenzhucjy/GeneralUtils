@@ -1,7 +1,7 @@
 package com.github.mysite.common.payonline.alipay.util;
 
 import com.github.mysite.common.encrypt.MD5Helper;
-import com.github.mysite.common.encrypt.RSAHelper;
+import com.github.mysite.common.encrypt.AliPayRSAHelper;
 import com.github.mysite.common.payonline.alipay.AlipayConfig;
 import com.github.mysite.common.payonline.alipay.util.httpclient.AliPayHttpRequest;
 import com.github.mysite.common.payonline.alipay.util.httpclient.AliPayHttpResponse;
@@ -52,8 +52,7 @@ public class AlipaySubmit_O {
             mysign = MD5Helper.sign(prestr, AlipayConfig.key, AlipayConfig.input_charset);
         }
         if (AlipayConfig.sign_type.equals("0001")) {
-            //false，表示无需URLEncode
-            mysign = RSAHelper.sign(prestr, AlipayConfig.private_key, AlipayConfig.input_charset, false);
+            mysign = AliPayRSAHelper.sign(prestr, AlipayConfig.input_charset);
         }
         return mysign;
     }
@@ -284,7 +283,7 @@ public class AlipaySubmit_O {
             String res_data = paraText.get("res_data");
             //解析加密部分字符串（RSA与MD5区别仅此一句）
             if (AlipayConfig.sign_type.equals("0001")) {
-                res_data = RSAHelper.decrypt(res_data, AlipayConfig.private_key, AlipayConfig.input_charset);
+                res_data = AliPayRSAHelper.decrypt(res_data, AlipayConfig.private_key, AlipayConfig.input_charset);
             }
 
             //token从res_data中解析出来（也就是说res_data中已经包含token的内容）

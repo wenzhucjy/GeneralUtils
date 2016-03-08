@@ -1,6 +1,6 @@
 package com.github.mysite.common.payonline.alipay.util;
 
-import com.github.mysite.common.encrypt.RSAHelper;
+import com.github.mysite.common.encrypt.AliPayRSAHelper;
 import com.github.mysite.common.payonline.alipay.AlipayConfig;
 import com.github.mysite.common.payonline.alipay.util.httpclient.AliPayHttpProtocolHandler;
 import com.github.mysite.common.payonline.alipay.util.httpclient.AliPayHttpRequest;
@@ -49,7 +49,7 @@ public class AlipaySubmit {
         String mysign = "";
         if (AlipayConfig.sign_type.equals("RSA")) {
             //no need URLEncode
-            mysign = RSAHelper.sign(prestr, AlipayConfig.private_key, AlipayConfig.input_charset,false);
+            mysign = AliPayRSAHelper.sign(prestr, AlipayConfig.input_charset);
         }
         return mysign;
     }
